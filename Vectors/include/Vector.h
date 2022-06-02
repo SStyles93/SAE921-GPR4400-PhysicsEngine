@@ -15,7 +15,6 @@ public:
 	//Methods
 	float Magnitude();
 	float SqrMagnitude();
-
 	Vector Normalized();
 
 	//Operator overloading
@@ -25,6 +24,9 @@ public:
 	Vector operator/(float&);
 
 private:
+
 	float _x;
 	float _y;
+
 };
+

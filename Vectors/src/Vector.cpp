@@ -16,7 +16,7 @@ float Vector::SqrMagnitude()
 
 Vector Vector::Normalized() 
 {
-	
+	return Vector(_x / Magnitude(), _y / Magnitude());
 }
 
 Vector Vector::operator+(Vector& v1) 
@@ -35,12 +35,12 @@ Vector Vector::operator-(Vector& v1)
 	return Vector(_x, _y);
 }
 
-//Vector Vector::operator*(float&)
-//{
-//	
-//}
-//
-//Vector Vector::operator/(float&)
-//{
-//	
-//}
+Vector Vector::operator*(float& f)
+{
+	return Vector(this->_x * f, this->_y * f);
+}
+
+Vector Vector::operator/(float& f)
+{
+	return Vector(this->_x / f, this->_y / f);
+}
