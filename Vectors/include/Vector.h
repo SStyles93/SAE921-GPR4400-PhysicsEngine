@@ -1,27 +1,31 @@
 #pragma once
 #include <iostream>
+#include <string>
 
-class Vector
+class Vector2
 {
 public:
 
 	//Default constructor && destructor
-	Vector();
-	~Vector();
+	Vector2();
+	~Vector2();
 	
 	//Constructor
-	Vector(float, float);
+	Vector2(const float, const float);
 
 	//Methods
 	float Magnitude();
 	float SqrMagnitude();
-	Vector Normalized();
+	float Dot(const Vector2&);
+	Vector2 Normalized();
 
 	//Operator overloading
-	Vector operator+(Vector&);
-	Vector operator-(Vector&);
-	Vector operator*(float&);
-	Vector operator/(float&);
+	Vector2 operator+(const Vector2&);
+	Vector2 operator-(const Vector2&);
+	Vector2 operator+=(const Vector2&);
+	Vector2 operator-=(const Vector2&);
+	Vector2 operator/(const float&);
+	Vector2 operator*(const float&);
 
 private:
 
@@ -29,4 +33,6 @@ private:
 	float _y;
 
 };
+
+//std::iostream operator<<(std::iostream&, const Vector2&);
 
