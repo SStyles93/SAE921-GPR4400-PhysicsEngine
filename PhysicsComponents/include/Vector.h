@@ -1,8 +1,10 @@
 #pragma once
+#include <cstdlib>
 #include <iostream>
+#include <SFML/Graphics.hpp>
 #include <string>
 
-class Vector2
+class Vector2 : public sf::Drawable, public sf::Transformable
 {
 public:
 
@@ -19,6 +21,8 @@ public:
 	float Dot(const Vector2&);
 	Vector2 Normalized();
 
+	void draw(sf::RenderTarget&, sf::RenderStates) const override;
+
 	//Operator overloading
 	Vector2 operator+(const Vector2&);
 	Vector2 operator-(const Vector2&);
@@ -27,11 +31,14 @@ public:
 	Vector2 operator/(const float&);
 	Vector2 operator*(const float&);
 
+
 private:
 
 	float _x;
 	float _y;
-
+	
+	//SFML
+	sf::Vertex _line[2];
 };
 
 //std::iostream operator<<(std::iostream&, const Vector2&);

@@ -1,26 +1,53 @@
-#include <Vector.h>
+#include "Vector.h"
 
-Vector2::Vector2(const float x, const float y) : _x(x), _y(y) {}
+Vector2::Vector2(const float x, const float y) : _x(x), _y(y) 
+{
+	_line[0] = sf::Vector2(0.0f, 0.0f);
+	_line[1] = sf::Vector2(_x, _y);
+}
 Vector2::~Vector2() {}
 
+/// <summary>
+/// Magnitude of this Vector
+/// </summary>
+/// <returns>The Magnitude</returns>
 float Vector2::Magnitude() 
 {
 	return std::sqrtf((_x * _x) + (_y * _y));
 };
 
+/// <summary>
+/// SquaredMagnitude of this Vector
+/// </summary>
+/// <returns>The Squared Magnitude</returns>
 float Vector2::SqrMagnitude() 
 {
 	return (_x * _x) + (_y * _y);
 };
 
+/// <summary>
+/// Gives the Dot product of this vector and the given one in parameter
+/// </summary>
+/// <param name="v1">Vector used for the dot product</param>
+/// <returns>The Dot Product of the two given Vectors</returns>
 float Vector2::Dot(const Vector2& v1)
 {
 	return ((this->_x * v1._x) * (this->_x * v1._y)) + ((this->_y * v1._x) * (this->_y * v1._y));
 }
 
+/// <summary>
+/// Normalizes this Vector
+/// </summary>
+/// <returns>The Normalized Vector</returns>
 Vector2 Vector2::Normalized() 
 {
 	return Vector2(_x / Magnitude(), _y / Magnitude());
+}
+
+void Vector2::draw(sf::RenderTarget& target, sf::RenderStates states) const 
+{
+	states.transform *= getTransform();
+	target.draw(_line, 2, sf::Lines);
 }
 
 Vector2 Vector2::operator+(const Vector2& v1) 

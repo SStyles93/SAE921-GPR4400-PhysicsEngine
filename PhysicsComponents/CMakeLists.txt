@@ -32,14 +32,14 @@ add_custom_target(
 # Get SFML and box2d libraries
 find_package(OpenGL REQUIRED)
 find_package(SFML COMPONENTS system window graphics main CONFIG REQUIRED)
-find_package(box2d CONFIG REQUIRED)
+#find_package(box2d CONFIG REQUIRED)
 include_directories(include/)
 
 # Add source to this project's executable.  
 file(GLOB_RECURSE PROJECT_SRC src/*.cpp include/*.h)
 
 # TODO: use the line with "win32" in it if you don't want the console
-add_executable(${EXECUTABLE_CUSTOM_NAME} ${PROJECT_SRC} "include/Vector.h" "src/Vector.cpp")
+add_executable(${EXECUTABLE_CUSTOM_NAME} ${PROJECT_SRC})
 # add_executable(${EXECUTABLE_CUSTOM_NAME} win32 ${PROJECT_SRC})
 
 # Add data dependencies
@@ -54,4 +54,4 @@ else()
 target_link_libraries(${EXECUTABLE_CUSTOM_NAME} PRIVATE X11 FLAC UDev OpenAL  ${OPENGL_LIBRARIES} )
 endif()
 
-target_link_libraries(${EXECUTABLE_CUSTOM_NAME} PRIVATE box2d::box2d)
+#target_link_libraries(${EXECUTABLE_CUSTOM_NAME} PRIVATE box2d::box2d)
