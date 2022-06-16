@@ -4,7 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 
-class Vector2 : public sf::Drawable, public sf::Transformable
+struct Vector2 /*: public sf::Drawable, public sf::Transformable*/
 {
 public:
 
@@ -21,7 +21,8 @@ public:
 	float Dot(const Vector2&);
 	Vector2 Normalized();
 
-	void draw(sf::RenderTarget&, sf::RenderStates) const override;
+	void SetOrigin(const Vector2&);
+	/*void draw(sf::RenderTarget&, sf::RenderStates) const override;*/
 
 	//Operator overloading
 	Vector2 operator+(const Vector2&);
@@ -30,16 +31,14 @@ public:
 	Vector2 operator-=(const Vector2&);
 	Vector2 operator/(const float&);
 	Vector2 operator*(const float&);
-
-
-private:
+	friend std::ostream& operator<<(std::ostream&, const Vector2&);
 
 	float _x;
 	float _y;
+
+private:
 	
 	//SFML
 	sf::Vertex _line[2];
+	
 };
-
-//std::iostream operator<<(std::iostream&, const Vector2&);
-

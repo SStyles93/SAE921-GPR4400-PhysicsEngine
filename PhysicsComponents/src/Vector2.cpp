@@ -1,4 +1,4 @@
-#include "Vector.h"
+#include "Vector2.h"
 
 Vector2::Vector2(const float x, const float y) : _x(x), _y(y) 
 {
@@ -44,11 +44,20 @@ Vector2 Vector2::Normalized()
 	return Vector2(_x / Magnitude(), _y / Magnitude());
 }
 
-void Vector2::draw(sf::RenderTarget& target, sf::RenderStates states) const 
+/// <summary>
+/// Sets the origin of the Vector2
+/// </summary>
+/// <param name="origin">Vector2 origin of the vector</param>
+void Vector2::SetOrigin(const Vector2& origin) 
 {
-	states.transform *= getTransform();
-	target.draw(_line, 2, sf::Lines);
+	_line[0] = sf::Vector2(origin._x, origin._y);
 }
+
+//void Vector2::draw(sf::RenderTarget& target, sf::RenderStates states) const 
+//{
+//	states.transform *= getTransform();
+//	target.draw(_line, 2, sf::Lines);
+//}
 
 Vector2 Vector2::operator+(const Vector2& v1) 
 {
@@ -92,7 +101,8 @@ Vector2 Vector2::operator/(const float& f)
 	return Vector2(this->_x / f, this->_y / f);
 }
 
-//std::iostream operator<<(const std::iostream stream, const Vector2& vec) 
-//{
-//
-//}
+std::ostream& operator<<(std::ostream& os, const Vector2& vec) 
+{
+	os << vec._x << '|' << vec._y << "\n";
+	return os;
+}

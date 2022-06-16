@@ -1,8 +1,8 @@
-#include "Engine.h"
+#include "World.h"
 
 int main()
 {
-    Engine engine;
+    World engine;
 
     engine.Init();
 

@@ -1,9 +1,12 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <chrono>
 #include "Entity.h"
-#include "Vector.h"
+#include "Vector2.h"
+#include "Rigidbody.h"
+#include "PhysicsEngine.h"
 
-class Engine 
+class World 
 {
 public:
 	
@@ -14,6 +17,10 @@ public:
 	void FixedUpdate();
 	void Update();
 
+	void SetTime(const time_t&);
+	void SetDeltaTime(const time_t&);
+
+
 private:
 
 	//SFML renderWindow
@@ -21,4 +28,11 @@ private:
 
 	//Entities
 	std::vector<std::unique_ptr<Entity>> _entities;
+
+	//Physics
+	std::unique_ptr<PhysicsEngine> _engine;
+
+	//Time values
+	time_t _time = 0;
+	time_t _deltaTime = 0;
 };
