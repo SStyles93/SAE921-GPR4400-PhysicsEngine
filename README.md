@@ -1,5 +1,5 @@
 # Physics Engine Project 
 
-This project is intended for learning how to create a physics engine 
+This project is initiation of how create a physics engine 
 
-## Actual version - Impementation of Vector2D
+## For informations go to the Wiki section
