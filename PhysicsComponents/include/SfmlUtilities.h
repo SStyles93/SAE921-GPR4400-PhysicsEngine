@@ -12,8 +12,8 @@ namespace SFMLUtilities
 	////Vector2 pixelsToMeters(sf::Vector2i pixels);
 	////float pixelsToMeters(float pixels);
 	////sf::Vector2f metersToPixels(Vector2 meters);
-	Vector2 sfmlToWorld(const sf::Vector2i, sf::RenderWindow&);
-	sf::Vector2f worldToSfml(const Vector2, sf::RenderWindow&);
+	Vector2 SfmlToWorld(const sf::Vector2i, sf::RenderWindow&);
+	sf::Vector2f WorldToSfml(const Vector2, sf::RenderWindow&);
 	//
 	//static Vector2& sfmlToWorld(const sf::Vector2i&);
 	//

@@ -5,6 +5,8 @@
 /// </summary>
 void PhysicsEngine::PhysicsUpdate(float deltaTime) 
 {
+	ClearCollisions();
+
 	for (auto& rigidbody : _rigidbodies)
 	{
 		rigidbody->SetForce(rigidbody->GetForce() += (_gravity* rigidbody->GetGravityScale()) * rigidbody->GetMass());
@@ -43,7 +45,7 @@ void PhysicsEngine::CheckCollisions(Rigidbody* myRigidbody)
 			if (SphereCollider::IsOverlappingSphere(mySphere, otherSphere, mtv))
 			{
 				mySphere->IsColliding(true);
-				std::cout << "mySphere is colliding" << std::endl;
+				//std::cout << "mySphere is colliding" << std::endl;
 				SolveCollision(myRigidbody, other);
 				SolveMTV(myRigidbody, other, mtv);
 			}

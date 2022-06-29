@@ -55,16 +55,18 @@ void World::Init()
 /// <param name="position">The position (Vector2i)</param>
 void World::AddEntity(sf::Vector2i position) 
 {
-	Vector2 positionInMeters = Vector2(SFMLUtilities::sfmlToWorld(position, _window));
+	Vector2 positionInMeters = Vector2(SFMLUtilities::SfmlToWorld(position, _window));
 
+	sf::CircleShape circle = sf::CircleShape(20.0f);
+	circle.setOrigin(circle.getRadius(), circle.getRadius());
 
 	//Create an entity
-	std::unique_ptr<Entity> entity1 = std::make_unique<Entity>(std::make_unique<sf::CircleShape>(10.0f), std::make_unique<Rigidbody>());
+	std::unique_ptr<Entity> entity1 = std::make_unique<Entity>(std::make_unique<sf::CircleShape>(circle), std::make_unique<Rigidbody>());
 	
 	entity1->GetRigidbody()->SetPosition(positionInMeters);
 	entity1->GetRigidbody()->SetMass(1.0f);
 	entity1->GetRigidbody()->SetGravityScale(0.01f);
-	entity1->GetRigidbody()->SetSphereCollider(std::make_unique<SphereCollider>(positionInMeters, 10.0f/ SFMLUtilities::pixelsMetersRatio));
+	entity1->GetRigidbody()->SetSphereCollider(std::make_unique<SphereCollider>(positionInMeters, 20.0f/ SFMLUtilities::pixelsMetersRatio));
 
 	//Register entities to the physics engine
 	_engine->RegisterRigidbody(entity1->GetRigidbody());

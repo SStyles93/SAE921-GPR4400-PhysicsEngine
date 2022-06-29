@@ -33,13 +33,13 @@ namespace SFMLUtilities
         return meters * pixelsMetersRatio;
     }
 
-    Vector2 sfmlToWorld(const sf::Vector2i vector2i, sf::RenderWindow& window)
+    Vector2 SfmlToWorld(const sf::Vector2i vector2i, sf::RenderWindow& window)
     {
         Vector2 newPos = Vector2(vector2i.x / pixelsMetersRatio, -vector2i.y / pixelsMetersRatio);
         return newPos;
     }
 
-    sf::Vector2f worldToSfml(const Vector2 vector, sf::RenderWindow& window)
+    sf::Vector2f WorldToSfml(const Vector2 vector, sf::RenderWindow& window)
     {
         sf::Vector2f newPos = sf::Vector2f(vector._x * pixelsMetersRatio, -vector._y * pixelsMetersRatio);
         return newPos;

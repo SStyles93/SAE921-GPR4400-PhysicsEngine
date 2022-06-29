@@ -10,8 +10,8 @@ class Entity : public sf::Drawable, public sf::Transformable
 public:
 
 	//Entity constructor
-	Entity(std::unique_ptr<sf::Drawable>);
-	Entity(std::unique_ptr<sf::Drawable>, std::unique_ptr<Rigidbody>);
+	Entity(std::unique_ptr<sf::Shape>);
+	Entity(std::unique_ptr<sf::Shape>, std::unique_ptr<Rigidbody>);
 	~Entity();
 
 	Rigidbody* GetRigidbody();
@@ -25,6 +25,6 @@ public:
 
 private:
 
-	std::unique_ptr<sf::Drawable> _drawable;
+	std::unique_ptr<sf::Shape> _shape;
 	std::unique_ptr<Rigidbody> _rigidbody;
 };
