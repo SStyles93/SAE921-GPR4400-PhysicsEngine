@@ -5,6 +5,8 @@
 #include "Vector2.h"
 #include "Rigidbody.h"
 #include "PhysicsEngine.h"
+#include "SphereCollider.h"
+#include "SfmlUtilities.h"
 
 class World 
 {
@@ -17,14 +19,13 @@ public:
 	void FixedUpdate();
 	void Update();
 
-	void SetTime(const time_t&);
-	void SetDeltaTime(const time_t&);
-
+	void AddEntity(sf::Vector2i);
 
 private:
 
 	//SFML renderWindow
 	sf::RenderWindow _window;
+	Vector2 _windowCenter;
 
 	//Entities
 	std::vector<std::unique_ptr<Entity>> _entities;
@@ -33,6 +34,6 @@ private:
 	std::unique_ptr<PhysicsEngine> _engine;
 
 	//Time values
-	time_t _time = 0;
-	time_t _deltaTime = 0;
+	std::chrono::steady_clock::time_point previousTime;
+	float _deltaTime = 0;
 };

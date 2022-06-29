@@ -2,11 +2,11 @@
 
 int main()
 {
-    World engine;
+    World world;
 
-    engine.Init();
+    world.Init();
 
-    engine.Loop();
+    world.Loop();
     
-    return engine.Loop();
+    return world.Loop();
 }

@@ -20,9 +20,12 @@ public:
 	float SqrMagnitude();
 	float Dot(const Vector2&);
 	Vector2 Normalized();
+	Vector2 RightOrtho();
+	Vector2 LeftOrtho();
 
 	void SetOrigin(const Vector2&);
 	/*void draw(sf::RenderTarget&, sf::RenderStates) const override;*/
+	
 
 	//Operator overloading
 	Vector2 operator+(const Vector2&);
