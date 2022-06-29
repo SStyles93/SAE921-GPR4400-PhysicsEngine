@@ -9,19 +9,25 @@ void PhysicsEngine::PhysicsUpdate(float deltaTime)
 
 	for (auto& rigidbody : _rigidbodies)
 	{
-		rigidbody->SetForce(rigidbody->GetForce() += (_gravity* rigidbody->GetGravityScale()) * rigidbody->GetMass());
-
-		rigidbody->SetVelocity(rigidbody->GetVelocity() += rigidbody->GetForce() / rigidbody->GetMass() * deltaTime);
-		rigidbody->SetPosition(rigidbody->GetPosition() += rigidbody->GetVelocity() * deltaTime);
+		for (auto& force : _forces)
+		{
+			rigidbody->AddForce(force);
+		}
+		
+		rigidbody->SetForce(rigidbody->GetForce() + (_gravity* rigidbody->GetGravityScale()) * rigidbody->GetMass());
+		
+		rigidbody->SetVelocity(rigidbody->GetVelocity() + rigidbody->GetForce() / rigidbody->GetMass() * deltaTime);
+		rigidbody->SetPosition(rigidbody->GetPosition() + rigidbody->GetVelocity() * deltaTime);
 
 		rigidbody->GetSphereCollider()->SetCenter(rigidbody->GetPosition());
 
 		rigidbody->SetForce(Vector2(0.0f, 0.0f));
 		
-		//std::cout << rigidbody->GetPosition();
-
 		CheckCollisions(rigidbody);
+
+		//std::cout << rigidbody->GetPosition();
 	}
+	_forces.clear();
 }
 
 /// <summary>
@@ -106,7 +112,7 @@ void PhysicsEngine::RemoveRigidbody(Rigidbody* rigidbody)
 	_rigidbodies.erase(itr);
 }
 
-void PhysicsEngine::AddForce(Vector2* force) 
+void PhysicsEngine::AddForce(Vector2 force) 
 {
 	_forces.emplace_back(force);
 }

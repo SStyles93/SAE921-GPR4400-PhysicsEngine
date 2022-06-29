@@ -11,15 +11,16 @@ public:
 	Rigidbody();
 	~Rigidbody();
 
-	Vector2& GetAcceleration();
-	Vector2& GetForce();
-	Vector2& GetPosition();
-	Vector2& GetRotation();
-	Vector2& GetVelocity();
-	float& GetMass();
-	float& GetGravityScale();
+	Vector2 GetAcceleration();
+	Vector2 GetForce();
+	Vector2 GetPosition();
+	Vector2 GetRotation();
+	Vector2 GetVelocity();
+	float GetMass();
+	float GetGravityScale();
 	SphereCollider* GetSphereCollider();
 
+	void AddForce(const Vector2&);
 	void SetAcceleration(const Vector2&);
 	void SetForce(const Vector2&);
 	void SetPosition(const Vector2&);

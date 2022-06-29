@@ -16,12 +16,12 @@ public:
 
 	void RegisterRigidbody(Rigidbody* rigidbody);
 	void RemoveRigidbody(Rigidbody* rigidbody);
-	void AddForce(Vector2* force);
+	void AddForce(Vector2 force);
 
 private:
 
 	std::vector<Rigidbody*> _rigidbodies;
-	std::vector<Vector2*> _forces;
+	std::vector<Vector2> _forces;
 
 	Vector2 _gravity = Vector2(0.0f, -9.81f);
 

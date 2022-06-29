@@ -53,10 +53,11 @@ void World::Init()
 /// Adds an entity and the given position
 /// </summary>
 /// <param name="position">The position (Vector2i)</param>
-void World::AddEntity(sf::Vector2i position) 
+void World::AddCircleEntity(sf::Vector2i position) 
 {
 	Vector2 positionInMeters = Vector2(SFMLUtilities::SfmlToWorld(position, _window));
 
+	//Creates a circle shape
 	sf::CircleShape circle = sf::CircleShape(20.0f);
 	circle.setOrigin(circle.getRadius(), circle.getRadius());
 
@@ -65,7 +66,7 @@ void World::AddEntity(sf::Vector2i position)
 	
 	entity1->GetRigidbody()->SetPosition(positionInMeters);
 	entity1->GetRigidbody()->SetMass(1.0f);
-	entity1->GetRigidbody()->SetGravityScale(0.01f);
+	entity1->GetRigidbody()->SetGravityScale(0.05f);
 	entity1->GetRigidbody()->SetSphereCollider(std::make_unique<SphereCollider>(positionInMeters, 20.0f/ SFMLUtilities::pixelsMetersRatio));
 
 	//Register entities to the physics engine
@@ -73,6 +74,32 @@ void World::AddEntity(sf::Vector2i position)
 	//Register entity to the world
 	_entities.emplace_back(std::move(entity1));
 }
+
+///// <summary>
+///// Adds an entity and the given position
+///// </summary>
+///// <param name="position">The position (Vector2i)</param>
+//void World::AddBoxEntity(sf::Vector2i position)
+//{
+//	Vector2 positionInMeters = Vector2(SFMLUtilities::SfmlToWorld(position, _window));
+//
+//	//Creates a circle shape
+//	sf::RectangleShape box = sf::RectangleShape();
+//	box.setOrigin(box.getSize().x * 0.5f, box.getSize().y * 0.5f);
+//
+//	//Create an entity
+//	std::unique_ptr<Entity> entity1 = std::make_unique<Entity>(std::make_unique<sf::RectangleShape>(box), std::make_unique<Rigidbody>());
+//
+//	entity1->GetRigidbody()->SetPosition(positionInMeters);
+//	entity1->GetRigidbody()->SetMass(1.0f);
+//	entity1->GetRigidbody()->SetGravityScale(0.05f);
+//	entity1->GetRigidbody()->SetSphereCollider(std::make_unique<BoxCollider>(positionInMeters, 20.0f / SFMLUtilities::pixelsMetersRatio));
+//
+//	//Register entities to the physics engine
+//	_engine->RegisterRigidbody(entity1->GetRigidbody());
+//	//Register entity to the world
+//	_entities.emplace_back(std::move(entity1));
+//}
 
 /// <summary>
 /// Looks for the user's interaction
@@ -99,13 +126,28 @@ void World::CheckEvents()
 			_window.setView(view);
 		}
 
-		if (event.type == sf::Event::KeyReleased)
+		if (event.type == sf::Event::KeyPressed)
 		{
-			
+			if (event.key.code == sf::Keyboard::W)
+			{
+				_engine->AddForce(Vector2(0.0f, 25.0f));
+			}
+			if (event.key.code == sf::Keyboard::S)
+			{
+				_engine->AddForce(Vector2(0.0f, -9.81f));
+			}
+			if (event.key.code == sf::Keyboard::A)
+			{
+				_engine->AddForce(Vector2(-4.0f, 0.0f));
+			}
+			if (event.key.code == sf::Keyboard::D)
+			{
+				_engine->AddForce(Vector2(4.0f, 0.0f));
+			}
 		}
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) 
 		{	
-			AddEntity(sf::Mouse::getPosition(_window));
+			AddCircleEntity(sf::Mouse::getPosition(_window));
 		}
 	}
 }

@@ -6,6 +6,7 @@
 #include "Rigidbody.h"
 #include "PhysicsEngine.h"
 #include "SphereCollider.h"
+#include "BoxCollider.h"
 #include "SfmlUtilities.h"
 
 class World 
@@ -19,7 +20,8 @@ public:
 	void FixedUpdate();
 	void Update();
 
-	void AddEntity(sf::Vector2i);
+	void AddCircleEntity(sf::Vector2i);
+	void AddBoxEntity(sf::Vector2i);
 
 private:
 

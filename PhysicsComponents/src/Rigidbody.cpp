@@ -9,7 +9,7 @@ Rigidbody::~Rigidbody(){}
 /// Get the acceleration of the rigidbody
 /// </summary>
 /// <returns>The acceleration (Vector2)</returns>
-Vector2& Rigidbody::GetAcceleration() 
+Vector2 Rigidbody::GetAcceleration() 
 {
 	return _acceleration;
 }
@@ -17,7 +17,7 @@ Vector2& Rigidbody::GetAcceleration()
 /// Get the force of the rigidbody
 /// </summary>
 /// <returns>Returns the force (Vector2)</returns>
-Vector2& Rigidbody::GetForce() 
+Vector2 Rigidbody::GetForce() 
 {
 	return _force;
 }
@@ -25,7 +25,7 @@ Vector2& Rigidbody::GetForce()
 /// Gets the position of the Rigidbody
 /// </summary>
 /// <returns>the acceleration (Vector2)</returns>
-Vector2& Rigidbody::GetPosition() 
+Vector2 Rigidbody::GetPosition() 
 {
 	return _position;
 }
@@ -33,7 +33,7 @@ Vector2& Rigidbody::GetPosition()
 /// Gets the rotation of the rigidbody
 /// </summary>
 /// <returns>Returns the rotation of the rigidbody (Vector2)</returns>
-Vector2& Rigidbody::GetRotation()
+Vector2 Rigidbody::GetRotation()
 {
 	return _rotation;
 }
@@ -41,7 +41,7 @@ Vector2& Rigidbody::GetRotation()
 /// Gets the velocity of the rigidbody
 /// </summary>
 /// <returns>Returns the velocity (Vector2)</returns>
-Vector2& Rigidbody::GetVelocity() 
+Vector2 Rigidbody::GetVelocity() 
 {
 	return _velocity;
 }
@@ -49,7 +49,7 @@ Vector2& Rigidbody::GetVelocity()
 /// Gets the mass of the rigidbody
 /// </summary>
 /// <returns>Returns the mass (float)</returns>
-float& Rigidbody::GetMass() 
+float Rigidbody::GetMass() 
 {
 	return _mass;
 }
@@ -57,7 +57,7 @@ float& Rigidbody::GetMass()
 /// Gets the gravity scale of the rigidbody
 /// </summary>
 /// <returns>The gravity scale (float)</returns>
-float& Rigidbody::GetGravityScale() 
+float Rigidbody::GetGravityScale() 
 {
 	return _gravityScale;
 }
@@ -70,6 +70,14 @@ SphereCollider* Rigidbody::GetSphereCollider()
 	return _sphereCollider.get();
 }
 
+/// <summary>
+/// Adds a given force to Rigidbody
+/// </summary>
+/// <param name="force">The given force (Vector2)</param>
+void Rigidbody::AddForce(const Vector2& force) 
+{
+	_force += force;
+}
 /// <summary>
 /// Sets the acceleration of the Rigidbody
 /// </summary>
