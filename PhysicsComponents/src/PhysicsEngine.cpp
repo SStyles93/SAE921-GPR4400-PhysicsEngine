@@ -19,7 +19,7 @@ void PhysicsEngine::PhysicsUpdate(float deltaTime)
 		rigidbody->SetVelocity(rigidbody->GetVelocity() + rigidbody->GetForce() / rigidbody->GetMass() * deltaTime);
 		rigidbody->SetPosition(rigidbody->GetPosition() + rigidbody->GetVelocity() * deltaTime);
 
-		rigidbody->GetSphereCollider()->SetCenter(rigidbody->GetPosition());
+		rigidbody->GetCollider()->SetCenter(rigidbody->GetPosition());
 
 		rigidbody->SetForce(Vector2(0.0f, 0.0f));
 		
@@ -45,20 +45,35 @@ void PhysicsEngine::CheckCollisions(Rigidbody* myRigidbody)
 
 		if (myRigidbody != other) 
 		{
-			SphereCollider* mySphere = dynamic_cast<SphereCollider*>(myRigidbody->GetSphereCollider());
-			SphereCollider* otherSphere = dynamic_cast<SphereCollider*>(other->GetSphereCollider());
+				SphereCollider* mySphere = dynamic_cast<SphereCollider*>(myRigidbody->GetCollider());
+				SphereCollider* otherSphere = dynamic_cast<SphereCollider*>(other->GetCollider());
+				if (mySphere != nullptr && otherSphere != nullptr) 
+				{
+					if (SphereCollider::IsOverlappingSphere(mySphere, otherSphere, mtv))
+					{
+						mySphere->IsColliding(true);
+						//std::cout << "mySphere is colliding" << std::endl;
+						SolveCollision(myRigidbody, other);
+						SolveMTV(myRigidbody, other, mtv);
+					}
+					else
+					{
+						//Not yet (SAT etc...)
+					}
+				}
 
-			if (SphereCollider::IsOverlappingSphere(mySphere, otherSphere, mtv))
-			{
-				mySphere->IsColliding(true);
-				//std::cout << "mySphere is colliding" << std::endl;
-				SolveCollision(myRigidbody, other);
-				SolveMTV(myRigidbody, other, mtv);
-			}
-			else
-			{
-				//Not yet (SAT etc...)
-			}
+				BoxCollider* myBox = dynamic_cast<BoxCollider*>(myRigidbody->GetCollider());
+				BoxCollider* otherBox = dynamic_cast<BoxCollider*>(other->GetCollider());
+				if (myBox != nullptr && otherBox != nullptr) 
+				{
+					if (BoxCollider::IsOverlappingBox(myBox, otherBox, mtv))
+					{
+						myBox->IsColliding(true);
+						SolveCollision(myRigidbody, other);
+						SolveMTV(myRigidbody, other, mtv);
+					}
+				}
+				
 		}
 	}
 }

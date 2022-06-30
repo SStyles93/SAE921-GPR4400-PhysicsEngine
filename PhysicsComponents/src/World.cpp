@@ -67,7 +67,7 @@ void World::AddCircleEntity(sf::Vector2i position)
 	entity1->GetRigidbody()->SetPosition(positionInMeters);
 	entity1->GetRigidbody()->SetMass(1.0f);
 	entity1->GetRigidbody()->SetGravityScale(0.05f);
-	entity1->GetRigidbody()->SetSphereCollider(std::make_unique<SphereCollider>(positionInMeters, 20.0f/ SFMLUtilities::pixelsMetersRatio));
+	entity1->GetRigidbody()->SetCollider(std::make_unique<SphereCollider>(positionInMeters, 20.0f/ SFMLUtilities::pixelsMetersRatio));
 
 	//Register entities to the physics engine
 	_engine->RegisterRigidbody(entity1->GetRigidbody());
@@ -75,31 +75,31 @@ void World::AddCircleEntity(sf::Vector2i position)
 	_entities.emplace_back(std::move(entity1));
 }
 
-///// <summary>
-///// Adds an entity and the given position
-///// </summary>
-///// <param name="position">The position (Vector2i)</param>
-//void World::AddBoxEntity(sf::Vector2i position)
-//{
-//	Vector2 positionInMeters = Vector2(SFMLUtilities::SfmlToWorld(position, _window));
-//
-//	//Creates a circle shape
-//	sf::RectangleShape box = sf::RectangleShape();
-//	box.setOrigin(box.getSize().x * 0.5f, box.getSize().y * 0.5f);
-//
-//	//Create an entity
-//	std::unique_ptr<Entity> entity1 = std::make_unique<Entity>(std::make_unique<sf::RectangleShape>(box), std::make_unique<Rigidbody>());
-//
-//	entity1->GetRigidbody()->SetPosition(positionInMeters);
-//	entity1->GetRigidbody()->SetMass(1.0f);
-//	entity1->GetRigidbody()->SetGravityScale(0.05f);
-//	entity1->GetRigidbody()->SetSphereCollider(std::make_unique<BoxCollider>(positionInMeters, 20.0f / SFMLUtilities::pixelsMetersRatio));
-//
-//	//Register entities to the physics engine
-//	_engine->RegisterRigidbody(entity1->GetRigidbody());
-//	//Register entity to the world
-//	_entities.emplace_back(std::move(entity1));
-//}
+/// <summary>
+/// Adds an entity and the given position
+/// </summary>
+/// <param name="position">The position (Vector2i)</param>
+void World::AddBoxEntity(sf::Vector2i position)
+{
+	Vector2 positionInMeters = Vector2(SFMLUtilities::SfmlToWorld(position, _window));
+
+	//Creates a box shape
+	sf::RectangleShape box = sf::RectangleShape(sf::Vector2f(50.0f, 50.0f));
+	box.setOrigin(box.getSize().x * 0.5f, box.getSize().y * 0.5f);
+
+	//Create an entity
+	std::unique_ptr<Entity> entity1 = std::make_unique<Entity>(std::make_unique<sf::RectangleShape>(box), std::make_unique<Rigidbody>());
+
+	entity1->GetRigidbody()->SetPosition(positionInMeters);
+	entity1->GetRigidbody()->SetMass(1.0f);
+	entity1->GetRigidbody()->SetGravityScale(0.0f);
+	entity1->GetRigidbody()->SetCollider(std::make_unique<BoxCollider>(positionInMeters, 50.0f / SFMLUtilities::pixelsMetersRatio));
+
+	//Register entities to the physics engine
+	_engine->RegisterRigidbody(entity1->GetRigidbody());
+	//Register entity to the world
+	_entities.emplace_back(std::move(entity1));
+}
 
 /// <summary>
 /// Looks for the user's interaction
@@ -147,7 +147,8 @@ void World::CheckEvents()
 		}
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) 
 		{	
-			AddCircleEntity(sf::Mouse::getPosition(_window));
+			//AddCircleEntity(sf::Mouse::getPosition(_window));
+			AddBoxEntity(sf::Mouse::getPosition(_window));
 		}
 	}
 }

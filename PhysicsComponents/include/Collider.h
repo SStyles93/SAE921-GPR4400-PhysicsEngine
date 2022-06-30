@@ -7,6 +7,8 @@ public:
 	Collider();
 	~Collider();
 
+	virtual void SetCenter(const Vector2&) = 0;
+
 	bool IsColliding();
 	void IsColliding(const bool);
 	bool IsOverlapping(Collider*);

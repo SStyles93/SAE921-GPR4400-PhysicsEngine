@@ -55,7 +55,7 @@ void Entity::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	if (_rigidbody != nullptr) 
 	{
-		if (_rigidbody->GetSphereCollider()->IsColliding()) 
+		if (_rigidbody->GetCollider()->IsColliding()) 
 		{
 			//Color
 			sf::Color color = sf::Color(0, 255, 0, 255);

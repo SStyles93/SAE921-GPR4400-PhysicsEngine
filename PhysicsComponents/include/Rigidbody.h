@@ -3,6 +3,7 @@
 #include "Vector2.h"
 #include "Collider.h"
 #include "SphereCollider.h"
+#include "BoxCollider.h"
 
 class Rigidbody
 {
@@ -18,7 +19,7 @@ public:
 	Vector2 GetVelocity();
 	float GetMass();
 	float GetGravityScale();
-	SphereCollider* GetSphereCollider();
+	Collider* GetCollider();
 
 	void AddForce(const Vector2&);
 	void SetAcceleration(const Vector2&);
@@ -28,11 +29,11 @@ public:
 	void SetVelocity(const Vector2&);
 	void SetGravityScale(const float&);
 	void SetMass(const float&);
-	void SetSphereCollider(std::unique_ptr<SphereCollider>);
+	void SetCollider(std::unique_ptr<Collider>);
 
 private:
 
-	std::unique_ptr<SphereCollider> _sphereCollider;
+	std::unique_ptr<Collider> _collider;
 
 	Vector2 _acceleration = Vector2(0.0f, 0.0f);
 	Vector2 _force = Vector2(0.0f, 0.0f);

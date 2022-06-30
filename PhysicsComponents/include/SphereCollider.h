@@ -9,7 +9,7 @@ public:
 	~SphereCollider();
 
 	Vector2& GetCenter();
-	void SetCenter(const Vector2&);
+	void SetCenter(const Vector2&) override;
 	
 	static bool IsOverlappingSphere(SphereCollider*, SphereCollider*, Vector2&);
 

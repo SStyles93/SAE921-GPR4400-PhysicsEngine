@@ -65,9 +65,9 @@ float Rigidbody::GetGravityScale()
 /// Gets the collider of the reigidbody
 /// </summary>
 /// <returns>Collider</returns>
-SphereCollider* Rigidbody::GetSphereCollider()
+Collider* Rigidbody::GetCollider()
 {
-	return _sphereCollider.get();
+	return _collider.get();
 }
 
 /// <summary>
@@ -138,10 +138,18 @@ void Rigidbody::SetVelocity(const Vector2& velocity)
 /// Sets the collider to the given one
 /// </summary>
 /// <param name="collider">the collider to give (unique_ptr)</param>
-void Rigidbody::SetSphereCollider(std::unique_ptr<SphereCollider> collider)
+void Rigidbody::SetCollider(std::unique_ptr<Collider> collider)
 {
-	_sphereCollider = std::move(collider);
+	_collider = std::move(collider);
 }
+/// <summary>
+/// Sets the BoxCollider of the Rigidbody
+/// </summary>
+/// <param name="boxBollider">The box collider</param>
+//void Rigidbody::SetBoxCollider(std::unique_ptr<BoxCollider> boxBollider) 
+//{
+//	_boxCollider = std::move(boxBollider);
+//}
 
 
 ///// <summary>
