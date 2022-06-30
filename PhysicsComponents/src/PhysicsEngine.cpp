@@ -96,8 +96,6 @@ void PhysicsEngine::CheckCollisions(Rigidbody* myRigidbody)
 						SolveMTV(myRigidbody, other, mtv);
 					}
 				}
-
-				
 				AddCollision(myRigidbody, other);
 		}
 	}
