@@ -40,5 +40,26 @@ bool BoxCollider::IsOverlappingBox(BoxCollider* myBox, BoxCollider* otherBox, Ve
 
 	if (max1X < min2X || min1X > max2X) return false;
 	if (max1Y < min2Y || min1Y > max2Y) return false;
+
+	Vector2 distance = Vector2(otherBox->_center - myBox->_center);
+	float distanceMagnitude = distance.Magnitude();
+	float lenghtSum = myBox->_halfExtent.Magnitude() + otherBox->_halfExtent.Magnitude();
+
+	float mtvDifference = lenghtSum - distanceMagnitude;
+	mtv = distance.Normalized() * mtvDifference;
+
 	return true;
+}
+
+bool BoxCollider::IsOverlappingSphere(BoxCollider* myBox, SphereCollider* sphereCollider, Vector2& mtv) 
+{
+	Vector2 distance = sphereCollider->GetCenter() - myBox->_center;
+
+	float distanceMagnitude = distance.Magnitude();
+	float radiusSum = myBox->_halfExtent.Magnitude() + sphereCollider->GetRadius();
+
+	float mtvDifference = radiusSum - distanceMagnitude;
+	mtv = distance.Normalized() * mtvDifference;
+
+	return (distanceMagnitude <= radiusSum);
 }

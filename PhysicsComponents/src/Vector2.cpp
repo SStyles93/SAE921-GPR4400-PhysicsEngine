@@ -46,6 +46,10 @@ float Vector2::Dot(const Vector2& v1)
 /// <returns>The Normalized Vector</returns>
 Vector2 Vector2::Normalized() 
 {
+	if (Magnitude() <= 0.0f) 
+	{
+		return Vector2(0.0f, 0.0f);
+	}
 	return Vector2(_x / Magnitude(), _y / Magnitude());
 }
 

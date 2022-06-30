@@ -14,6 +14,11 @@ Vector2& SphereCollider::GetCenter()
 	return _center;
 }
 
+float& SphereCollider::GetRadius() 
+{
+	return _radius;
+}
+
 void SphereCollider::SetCenter(const Vector2& vector) 
 {
 	_center = vector;

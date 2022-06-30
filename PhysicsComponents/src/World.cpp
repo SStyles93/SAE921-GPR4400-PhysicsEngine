@@ -66,7 +66,7 @@ void World::AddCircleEntity(sf::Vector2i position)
 	
 	entity1->GetRigidbody()->SetPosition(positionInMeters);
 	entity1->GetRigidbody()->SetMass(1.0f);
-	entity1->GetRigidbody()->SetGravityScale(0.05f);
+	entity1->GetRigidbody()->SetGravityScale(0.0f);
 	entity1->GetRigidbody()->SetCollider(std::make_unique<SphereCollider>(positionInMeters, 20.0f/ SFMLUtilities::pixelsMetersRatio));
 
 	//Register entities to the physics engine
@@ -147,6 +147,11 @@ void World::CheckEvents()
 		}
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) 
 		{	
+			AddCircleEntity(sf::Mouse::getPosition(_window));
+			//AddBoxEntity(sf::Mouse::getPosition(_window));
+		}
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
+		{
 			//AddCircleEntity(sf::Mouse::getPosition(_window));
 			AddBoxEntity(sf::Mouse::getPosition(_window));
 		}

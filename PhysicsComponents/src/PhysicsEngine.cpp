@@ -43,7 +43,7 @@ void PhysicsEngine::CheckCollisions(Rigidbody* myRigidbody)
 	{
 		Vector2 mtv;
 
-		if (myRigidbody != other) 
+		if (myRigidbody != other && !CheckCollisionDone(myRigidbody, other)) 
 		{
 				SphereCollider* mySphere = dynamic_cast<SphereCollider*>(myRigidbody->GetCollider());
 				SphereCollider* otherSphere = dynamic_cast<SphereCollider*>(other->GetCollider());
@@ -52,7 +52,6 @@ void PhysicsEngine::CheckCollisions(Rigidbody* myRigidbody)
 					if (SphereCollider::IsOverlappingSphere(mySphere, otherSphere, mtv))
 					{
 						mySphere->IsColliding(true);
-						//std::cout << "mySphere is colliding" << std::endl;
 						SolveCollision(myRigidbody, other);
 						SolveMTV(myRigidbody, other, mtv);
 					}
@@ -73,9 +72,36 @@ void PhysicsEngine::CheckCollisions(Rigidbody* myRigidbody)
 						SolveMTV(myRigidbody, other, mtv);
 					}
 				}
+
+				BoxCollider* myBox1 = dynamic_cast<BoxCollider*>(myRigidbody->GetCollider());
+				BoxCollider* myBox2 = dynamic_cast<BoxCollider*>(other->GetCollider());
+
+				SphereCollider* otherSphere1 = dynamic_cast<SphereCollider*>(other->GetCollider());
+				SphereCollider* otherSphere2 = dynamic_cast<SphereCollider*>(myRigidbody->GetCollider());
+				if (myBox1 != nullptr && otherSphere1 != nullptr)
+				{
+					if (BoxCollider::IsOverlappingSphere(myBox1, otherSphere1, mtv))
+					{
+						myBox1->IsColliding(true);
+						SolveCollision(myRigidbody, other);
+						SolveMTV(myRigidbody, other, mtv);
+					}
+				}
+				else if (myBox2 != nullptr && otherSphere2 != nullptr) 
+				{
+					if (BoxCollider::IsOverlappingSphere(myBox2, otherSphere2, mtv))
+					{
+						myBox2->IsColliding(true);
+						SolveCollision(myRigidbody, other);
+						SolveMTV(myRigidbody, other, mtv);
+					}
+				}
+
 				
+				AddCollision(myRigidbody, other);
 		}
 	}
+	ClearCollisions();
 }
 
 void PhysicsEngine::SolveCollision(Rigidbody* myBody, Rigidbody* otherBody) 
@@ -102,8 +128,11 @@ void PhysicsEngine::SolveCollision(Rigidbody* myBody, Rigidbody* otherBody)
 
 void PhysicsEngine::SolveMTV(Rigidbody* myBody, Rigidbody* otherBody, Vector2& mtv) 
 {
-	myBody->SetPosition(myBody->GetPosition() + (mtv * 0.5f));
-	myBody->SetPosition(myBody->GetPosition() - (mtv * 0.5f));
+	if (mtv.SqrMagnitude() > 0.0f) 
+	{
+		myBody->SetPosition(myBody->GetPosition() - (mtv * 0.5f));
+		otherBody->SetPosition(otherBody->GetPosition() + (mtv * 0.5f));
+	}
 }
 
 /// <summary>
