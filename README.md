@@ -1,5 +1,5 @@
 # Physics Engine Project 
 
-This project is initiation of how create a physics engine 
+This project is the first try at the creation of a physics engine
 
 ## For informations go to the Wiki section
