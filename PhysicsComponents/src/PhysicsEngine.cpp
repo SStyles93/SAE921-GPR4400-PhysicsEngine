@@ -1,5 +1,14 @@
 #include "PhysicsEngine.h"
 
+void PhysicsEngine::SetGravity(Vector2 gravity) 
+{
+	_gravity = gravity;
+}
+void PhysicsEngine::SetGravity(float gravity) 
+{
+	_gravity = Vector2(0.0f, gravity);
+}
+
 /// <summary>
 /// Updates the physical position of all rigidbodies
 /// </summary>
@@ -9,24 +18,27 @@ void PhysicsEngine::PhysicsUpdate(float deltaTime)
 
 	for (auto& rigidbody : _rigidbodies)
 	{
-		for (auto& force : _forces)
+		if (!rigidbody->IsStatic())
 		{
-			rigidbody->AddForce(force);
+			for (auto& force : _forces)
+			{
+				rigidbody->AddForce(force);
+			}
+
+			rigidbody->SetForce(rigidbody->GetForce() + (_gravity * rigidbody->GetGravityScale()) * rigidbody->GetMass());
+
+			rigidbody->SetVelocity(rigidbody->GetVelocity() + rigidbody->GetForce() / rigidbody->GetMass() * deltaTime);
+			rigidbody->SetPosition(rigidbody->GetPosition() + rigidbody->GetVelocity() * deltaTime);
+
+			rigidbody->GetCollider()->SetCenter(rigidbody->GetPosition());
+
+			rigidbody->SetForce(Vector2(0.0f, 0.0f));
+
+			CheckCollisions(rigidbody);
 		}
-		
-		rigidbody->SetForce(rigidbody->GetForce() + (_gravity* rigidbody->GetGravityScale()) * rigidbody->GetMass());
-		
-		rigidbody->SetVelocity(rigidbody->GetVelocity() + rigidbody->GetForce() / rigidbody->GetMass() * deltaTime);
-		rigidbody->SetPosition(rigidbody->GetPosition() + rigidbody->GetVelocity() * deltaTime);
-
-		rigidbody->GetCollider()->SetCenter(rigidbody->GetPosition());
-
-		rigidbody->SetForce(Vector2(0.0f, 0.0f));
-		
-		CheckCollisions(rigidbody);
-
-		//std::cout << rigidbody->GetPosition();
 	}
+
+	//Stops applying forces on the Rigidbodies at the end of the Physics Update
 	_forces.clear();
 }
 
@@ -120,16 +132,26 @@ void PhysicsEngine::SolveCollision(Rigidbody* myBody, Rigidbody* otherBody)
 	v1AfterImpact = Vector2(n._x * V2n + g._x * V1g, n._y * V2n + g._y * V1g);
 	v2AfterImpact = Vector2(n._x * V1n + g._x * V2g, n._y * V1n + g._y * V2g);
 
-	myBody->SetVelocity(v1AfterImpact);
-	otherBody->SetVelocity(v2AfterImpact);
+	if (!myBody->IsStatic()) 
+		myBody->SetVelocity(v1AfterImpact);
+	else
+		otherBody->SetVelocity(v1AfterImpact + (v2AfterImpact * -1.0f));
+
+	if (!otherBody->IsStatic()) 
+		otherBody->SetVelocity(v2AfterImpact);
+	else
+		myBody->SetVelocity(v1AfterImpact + (v2AfterImpact * -1.0f));
+	
 }
 
 void PhysicsEngine::SolveMTV(Rigidbody* myBody, Rigidbody* otherBody, Vector2& mtv) 
 {
 	if (mtv.SqrMagnitude() > 0.0f) 
 	{
-		myBody->SetPosition(myBody->GetPosition() - (mtv * 0.5f));
-		otherBody->SetPosition(otherBody->GetPosition() + (mtv * 0.5f));
+		if (!myBody->IsStatic())
+			myBody->SetPosition(myBody->GetPosition() - (mtv * 0.5f));
+		if (!otherBody->IsStatic())
+			otherBody->SetPosition(otherBody->GetPosition() + (mtv * 0.5f));
 	}
 }
 
@@ -182,4 +204,9 @@ bool PhysicsEngine::CheckCollisionDone(Rigidbody* myBody, Rigidbody* otherBody)
 void PhysicsEngine::ClearCollisions() 
 {
 	_collisions.clear();
+}
+
+void PhysicsEngine::SetBSP(BinarySpacePartitioning* bsp) 
+{
+	_bsp = bsp;
 }

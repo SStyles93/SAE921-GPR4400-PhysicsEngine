@@ -20,6 +20,7 @@ public:
 	float GetMass();
 	float GetGravityScale();
 	Collider* GetCollider();
+	bool IsStatic();
 
 	void AddForce(const Vector2&);
 	void SetAcceleration(const Vector2&);
@@ -30,6 +31,7 @@ public:
 	void SetGravityScale(const float&);
 	void SetMass(const float&);
 	void SetCollider(std::unique_ptr<Collider>);
+	void IsKinematic(bool);
 
 private:
 
@@ -43,5 +45,7 @@ private:
 	
 	float _gravityScale = 1.0f;
 	float _mass = 0.0f;
+
+	bool _isStatic = false;
 
 };

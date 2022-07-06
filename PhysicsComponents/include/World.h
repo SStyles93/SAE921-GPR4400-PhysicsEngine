@@ -2,11 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <chrono>
 #include "Entity.h"
-#include "Vector2.h"
-#include "Rigidbody.h"
 #include "PhysicsEngine.h"
-#include "SphereCollider.h"
-#include "BoxCollider.h"
 #include "SfmlUtilities.h"
 
 class World 

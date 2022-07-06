@@ -3,25 +3,25 @@
 
 namespace SFMLUtilities
 {
-    //
-    //
-    //    //Vector2 pixelsToMeters(sf::Vector2f pixels)
-    //    //{
-    //    //    return Vector2(pixels.x / pixelsMetersRatio, pixels.y / pixelsMetersRatio * -1.0f);
-    //    //}
-    //    //Vector2 pixelsToMeters(sf::Vector2u pixels)
-    //    //{
-    //    //    return Vector2(pixels.x / pixelsMetersRatio, pixels.y / pixelsMetersRatio * -1.0f);
-    //    //}
-    //    //Vector2 pixelsToMeters(sf::Vector2i pixels)
-    //    //{
-    //    //    return Vector2(pixels.x / pixelsMetersRatio, pixels.y / pixelsMetersRatio * -1.0f);
-    //    //}
+    
+    
+    Vector2 pixelsToMeters(sf::Vector2f pixels)
+    {
+        return Vector2(pixels.x / pixelsMetersRatio, pixels.y / pixelsMetersRatio * -1.0f);
+    }
+    Vector2 pixelsToMeters(sf::Vector2u pixels)
+    {
+        return Vector2(pixels.x / pixelsMetersRatio, pixels.y / pixelsMetersRatio * -1.0f);
+    }
+    Vector2 pixelsToMeters(sf::Vector2i pixels)
+    {
+        return Vector2(pixels.x / pixelsMetersRatio, pixels.y / pixelsMetersRatio * -1.0f);
+    }
 
-    //sf::Vector2f metersToPixels(Vector2 meters)
-    //{
-    //    return sf::Vector2f(meters._x * pixelsMetersRatio, -1.0f * meters._y * pixelsMetersRatio);
-    //}
+    sf::Vector2f metersToPixels(Vector2 meters)
+    {
+        return sf::Vector2f(meters._x * pixelsMetersRatio, -1.0f * meters._y * pixelsMetersRatio);
+    }
 
     float pixelsToMeters(float pixels)
     {

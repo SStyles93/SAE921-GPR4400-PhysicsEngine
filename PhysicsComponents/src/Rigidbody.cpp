@@ -69,6 +69,10 @@ Collider* Rigidbody::GetCollider()
 {
 	return _collider.get();
 }
+bool Rigidbody::IsStatic() 
+{
+	return _isStatic;
+}
 
 /// <summary>
 /// Adds a given force to Rigidbody
@@ -141,6 +145,14 @@ void Rigidbody::SetVelocity(const Vector2& velocity)
 void Rigidbody::SetCollider(std::unique_ptr<Collider> collider)
 {
 	_collider = std::move(collider);
+}
+/// <summary>
+/// Defines is the body is Kinematic or not
+/// </summary>
+/// <param name="value">Set to false the body will be static</param>
+void Rigidbody::IsKinematic(bool value) 
+{
+	_isStatic = !value;
 }
 /// <summary>
 /// Sets the BoxCollider of the Rigidbody

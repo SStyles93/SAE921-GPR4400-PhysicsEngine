@@ -23,7 +23,7 @@ int World::Loop()
 void World::Init() 
 {
     // Basic Setup of the window
-    _window.create(sf::VideoMode(1280, 800), "PhysicsVisualiser");
+    _window.create(sf::VideoMode(3840, 2160), "PhysicsVisualiser");
 
     // Vertical sync, framerate
     _window.setVerticalSyncEnabled(true);
@@ -31,6 +31,18 @@ void World::Init()
 	
 	//Create the physics engine
 	_engine = std::make_unique<PhysicsEngine>();
+
+	/*Space windowSpace = 
+		Space(Vector2(0.0f, 0.0f), 
+		Vector2(SFMLUtilities::pixelsToMeters(_window.getSize().x), SFMLUtilities::pixelsToMeters(_window.getSize().y)));*/
+	//BinarySpacePartitioning bsp = BinarySpacePartitioning(&windowSpace, 6);
+	BinarySpacePartitioning bsp =
+		BinarySpacePartitioning(
+			SFMLUtilities::pixelsToMeters(_window.getSize().x),
+			SFMLUtilities::pixelsToMeters(_window.getSize().y),
+			4);
+	_engine->SetBSP(&bsp);
+
 }
 
 /// <summary>
@@ -90,7 +102,6 @@ void World::CheckEvents()
 	}
 }
 
-
 /// <summary>
 /// The physics update of the engine
 /// </summary>
@@ -138,6 +149,9 @@ void World::AddCircleEntity(sf::Vector2i position)
 	entity1->GetRigidbody()->SetGravityScale(0.0f);
 	entity1->GetRigidbody()->SetCollider(std::make_unique<SphereCollider>(positionInMeters, 20.0f / SFMLUtilities::pixelsMetersRatio));
 
+	//Sets the Rigibody to static
+	//entity1->GetRigidbody()->IsKinematic(false);
+
 	//Register entities to the physics engine
 	_engine->RegisterRigidbody(entity1->GetRigidbody());
 	//Register entity to the world
@@ -163,6 +177,9 @@ void World::AddBoxEntity(sf::Vector2i position)
 	entity1->GetRigidbody()->SetMass(1.0f);
 	entity1->GetRigidbody()->SetGravityScale(0.0f);
 	entity1->GetRigidbody()->SetCollider(std::make_unique<BoxCollider>(positionInMeters, 50.0f / SFMLUtilities::pixelsMetersRatio));
+	
+	//Sets the body to static
+	entity1->GetRigidbody()->IsKinematic(false);
 
 	//Register entities to the physics engine
 	_engine->RegisterRigidbody(entity1->GetRigidbody());
