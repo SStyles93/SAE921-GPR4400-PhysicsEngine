@@ -1,20 +1,61 @@
 #include "BinarySpacePartitioning.h"
 
 
-BinarySpacePartitioning::BinarySpacePartitioning(float xPos, float yPos, int divisionFactor)
+BinarySpacePartitioning::BinarySpacePartitioning(float xSize, float ySize, int divisionFactor)
 {
-	for (float x = 0; x < xPos; x+=(xPos/divisionFactor))
+	float xFactor = xSize / divisionFactor;
+	float yFactor = ySize / divisionFactor;
+
+	for (int x = 0; x < divisionFactor; x++)
 	{
-		for (float y = 0; y < yPos; y+=(yPos/divisionFactor))
+		float xValue = x * xFactor;
+		for (int y = 0; y < divisionFactor; y++)
 		{
-			_positions.emplace_back(std::vector<float>{x, y});
+			float yValue = y * yFactor;
+			_positions.emplace_back(xValue, yValue);
 		}
 	}
 }
+BinarySpacePartitioning::BinarySpacePartitioning(Vector2 size, int divisionFactor)
+{
+	float xFactor = size._x / divisionFactor;
+	float yFactor = size._y / divisionFactor;
 
+	for (int x = 0; x < divisionFactor; x++)
+	{
+		float xValue = x * xFactor;
+		for (int y = 0; y < divisionFactor; y++)
+		{
+			float yValue = y * yFactor;
+			_positions.emplace_back(xValue, yValue);
+		}
+	}
+}
 BinarySpacePartitioning::BinarySpacePartitioning() {}
-
 BinarySpacePartitioning::~BinarySpacePartitioning() {}
+
+void BinarySpacePartitioning::AssignId(Rigidbody* rigidbody) 
+{
+	for (int posIdx = _positions.size()-1; posIdx >= 0; posIdx--)
+	{
+		if (rigidbody->GetPosition()._x > _positions[posIdx].first) 
+		{
+			if (rigidbody->GetPosition()._y < _positions[posIdx].second) 
+			{
+				rigidbody->SetId(posIdx);
+				break;
+			}
+			else 
+			{
+				continue;
+			}
+		}
+		else
+		{
+			continue;
+		}
+	}
+}
 
 #pragma region BSP SpaceVersion
 //BinarySpacePartitioning::BinarySpacePartitioning() {}

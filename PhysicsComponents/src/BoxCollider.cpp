@@ -1,26 +1,26 @@
 #include "BoxCollider.h"
 
-BoxCollider::BoxCollider(Vector2 center, float distance) : _center(center) 
+BoxCollider::BoxCollider(Vector2 center, float size) : _center(center) 
 {
-	_halfExtent._x = (distance * 0.5f);
-	_halfExtent._y = (distance * 0.5f);
+	_halfExtent._x = (size * 0.5f);
+	_halfExtent._y = (size * 0.5f);
 }
-
+BoxCollider::BoxCollider(Vector2 center, float sizeX, float sizeY) : _center(center)
+{
+	_halfExtent._x = (sizeX * 0.5f);
+	_halfExtent._y = (sizeY * 0.5f);
+}
+BoxCollider::BoxCollider(Vector2 center, Vector2 size) : _center(center)
+{
+	_halfExtent._x = (size._x * 0.5f);
+	_halfExtent._y = (size._y * 0.5f);
+}
 BoxCollider::~BoxCollider(){}
 
-/// <summary>
-/// Gets the center of the BoxCollider
-/// </summary>
-/// <returns>The center (Vector2)</returns>
 Vector2& BoxCollider::GetCenter() 
 {
 	return _center;
 }
-
-/// <summary>
-/// Sets the center of the BoxCollider
-/// </summary>
-/// <param name="center">The center (Vector2)</param>
 void BoxCollider::SetCenter(const Vector2& center) 
 {
 	_center = center;
@@ -50,7 +50,6 @@ bool BoxCollider::IsOverlappingBox(BoxCollider* myBox, BoxCollider* otherBox, Ve
 
 	return true;
 }
-
 bool BoxCollider::IsOverlappingSphere(BoxCollider* myBox, SphereCollider* sphereCollider, Vector2& mtv) 
 {
 	Vector2 distance = sphereCollider->GetCenter() - myBox->_center;

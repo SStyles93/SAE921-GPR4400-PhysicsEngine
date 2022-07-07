@@ -1,17 +1,5 @@
 #include "PhysicsEngine.h"
 
-void PhysicsEngine::SetGravity(Vector2 gravity) 
-{
-	_gravity = gravity;
-}
-void PhysicsEngine::SetGravity(float gravity) 
-{
-	_gravity = Vector2(0.0f, gravity);
-}
-
-/// <summary>
-/// Updates the physical position of all rigidbodies
-/// </summary>
 void PhysicsEngine::PhysicsUpdate(float deltaTime) 
 {
 	ClearCollisions();
@@ -41,79 +29,79 @@ void PhysicsEngine::PhysicsUpdate(float deltaTime)
 	//Stops applying forces on the Rigidbodies at the end of the Physics Update
 	_forces.clear();
 }
-
-/// <summary>
-/// Checks the collision between two colliders
-/// </summary>
-/// <param name="me">The collider to check</param>
-/// <param name="other">The other collider with which the first one is checked</param>
 void PhysicsEngine::CheckCollisions(Rigidbody* myRigidbody) 
 {
 	bool isColliding = false;
 
+	_bsp.AssignId(myRigidbody);
+
 	for(auto& other : _rigidbodies)
 	{
+		_bsp.AssignId(other);
+
+		if (myRigidbody->GetId() != other->GetId() || myRigidbody == other)
+			continue;
+
 		Vector2 mtv;
 
 		if (myRigidbody != other && !CheckCollisionDone(myRigidbody, other)) 
 		{
-				SphereCollider* mySphere = dynamic_cast<SphereCollider*>(myRigidbody->GetCollider());
-				SphereCollider* otherSphere = dynamic_cast<SphereCollider*>(other->GetCollider());
-				if (mySphere != nullptr && otherSphere != nullptr) 
+			SphereCollider* mySphere = dynamic_cast<SphereCollider*>(myRigidbody->GetCollider());
+			SphereCollider* otherSphere = dynamic_cast<SphereCollider*>(other->GetCollider());
+			if (mySphere != nullptr && otherSphere != nullptr) 
+			{
+				if (SphereCollider::IsOverlappingSphere(mySphere, otherSphere, mtv))
 				{
-					if (SphereCollider::IsOverlappingSphere(mySphere, otherSphere, mtv))
-					{
-						mySphere->IsColliding(true);
-						SolveCollision(myRigidbody, other);
-						SolveMTV(myRigidbody, other, mtv);
-					}
-					else
-					{
-						//Not yet (SAT etc...)
-					}
+					mySphere->IsColliding(true);
+					SolveCollision(myRigidbody, other);
+					SolveMTV(myRigidbody, other, mtv);
 				}
+				else
+				{
+					//Not yet (SAT etc...)
+				}
+			}
 
-				BoxCollider* myBox = dynamic_cast<BoxCollider*>(myRigidbody->GetCollider());
-				BoxCollider* otherBox = dynamic_cast<BoxCollider*>(other->GetCollider());
-				if (myBox != nullptr && otherBox != nullptr) 
+			BoxCollider* myBox = dynamic_cast<BoxCollider*>(myRigidbody->GetCollider());
+			BoxCollider* otherBox = dynamic_cast<BoxCollider*>(other->GetCollider());
+			if (myBox != nullptr && otherBox != nullptr) 
+			{
+				if (BoxCollider::IsOverlappingBox(myBox, otherBox, mtv))
 				{
-					if (BoxCollider::IsOverlappingBox(myBox, otherBox, mtv))
-					{
-						myBox->IsColliding(true);
-						SolveCollision(myRigidbody, other);
-						SolveMTV(myRigidbody, other, mtv);
-					}
+					myBox->IsColliding(true);
+					SolveCollision(myRigidbody, other);
+					SolveMTV(myRigidbody, other, mtv);
 				}
+			}
 
-				BoxCollider* myBox1 = dynamic_cast<BoxCollider*>(myRigidbody->GetCollider());
-				BoxCollider* myBox2 = dynamic_cast<BoxCollider*>(other->GetCollider());
+			BoxCollider* myBox1 = dynamic_cast<BoxCollider*>(myRigidbody->GetCollider());
+			BoxCollider* myBox2 = dynamic_cast<BoxCollider*>(other->GetCollider());
 
-				SphereCollider* otherSphere1 = dynamic_cast<SphereCollider*>(other->GetCollider());
-				SphereCollider* otherSphere2 = dynamic_cast<SphereCollider*>(myRigidbody->GetCollider());
-				if (myBox1 != nullptr && otherSphere1 != nullptr)
+			SphereCollider* otherSphere1 = dynamic_cast<SphereCollider*>(other->GetCollider());
+			SphereCollider* otherSphere2 = dynamic_cast<SphereCollider*>(myRigidbody->GetCollider());
+			if (myBox1 != nullptr && otherSphere1 != nullptr)
+			{
+				if (BoxCollider::IsOverlappingSphere(myBox1, otherSphere1, mtv))
 				{
-					if (BoxCollider::IsOverlappingSphere(myBox1, otherSphere1, mtv))
-					{
-						myBox1->IsColliding(true);
-						SolveCollision(myRigidbody, other);
-						SolveMTV(myRigidbody, other, mtv);
-					}
+					myBox1->IsColliding(true);
+					SolveCollision(myRigidbody, other);
+					SolveMTV(myRigidbody, other, mtv);
 				}
-				else if (myBox2 != nullptr && otherSphere2 != nullptr) 
+			}
+			else if (myBox2 != nullptr && otherSphere2 != nullptr) 
+			{
+				if (BoxCollider::IsOverlappingSphere(myBox2, otherSphere2, mtv))
 				{
-					if (BoxCollider::IsOverlappingSphere(myBox2, otherSphere2, mtv))
-					{
-						myBox2->IsColliding(true);
-						SolveCollision(myRigidbody, other);
-						SolveMTV(myRigidbody, other, mtv);
-					}
+					myBox2->IsColliding(true);
+					SolveCollision(myRigidbody, other);
+					SolveMTV(myRigidbody, other, mtv);
 				}
-				AddCollision(myRigidbody, other);
+			}
+			AddCollision(myRigidbody, other);
 		}
 	}
 	ClearCollisions();
 }
-
 void PhysicsEngine::SolveCollision(Rigidbody* myBody, Rigidbody* otherBody) 
 {
 	Vector2 v1 = myBody->GetVelocity();
@@ -133,17 +121,16 @@ void PhysicsEngine::SolveCollision(Rigidbody* myBody, Rigidbody* otherBody)
 	v2AfterImpact = Vector2(n._x * V1n + g._x * V2g, n._y * V1n + g._y * V2g);
 
 	if (!myBody->IsStatic()) 
-		myBody->SetVelocity(v1AfterImpact);
+		myBody->SetVelocity(v1AfterImpact * myBody->GetBounciness());
 	else
-		otherBody->SetVelocity(v1AfterImpact + (v2AfterImpact * -1.0f));
+		otherBody->SetVelocity((v1AfterImpact + (v2AfterImpact * -1.0f) * otherBody->GetBounciness()));
 
 	if (!otherBody->IsStatic()) 
-		otherBody->SetVelocity(v2AfterImpact);
+		otherBody->SetVelocity(v2AfterImpact * otherBody->GetBounciness());
 	else
-		myBody->SetVelocity(v1AfterImpact + (v2AfterImpact * -1.0f));
+		myBody->SetVelocity((v1AfterImpact + (v2AfterImpact * -1.0f)  * myBody->GetBounciness()));
 	
 }
-
 void PhysicsEngine::SolveMTV(Rigidbody* myBody, Rigidbody* otherBody, Vector2& mtv) 
 {
 	if (mtv.SqrMagnitude() > 0.0f) 
@@ -155,19 +142,10 @@ void PhysicsEngine::SolveMTV(Rigidbody* myBody, Rigidbody* otherBody, Vector2& m
 	}
 }
 
-/// <summary>
-/// Register the Rigidbody in the PhysicsEngine
-/// </summary>
-/// <param name="rigidbody">The Rigidbody to register</param>
 void PhysicsEngine::RegisterRigidbody(Rigidbody* rigidbody) 
 {
 	_rigidbodies.push_back(rigidbody);
 }
-
-/// <summary>
-/// Removes the Rigidbody from the PhysicsEngine
-/// </summary>
-/// <param name="rigidbody">The Rigidbody to remove</param>
 void PhysicsEngine::RemoveRigidbody(Rigidbody* rigidbody) 
 {
 	if (!rigidbody) return;
@@ -180,6 +158,19 @@ void PhysicsEngine::AddForce(Vector2 force)
 {
 	_forces.emplace_back(force);
 }
+void PhysicsEngine::SetGravity(Vector2 gravity)
+{
+	_gravity = gravity;
+}
+void PhysicsEngine::SetGravity(float gravity)
+{
+	_gravity = Vector2(0.0f, gravity);
+}
+
+void PhysicsEngine::SetBSP(BinarySpacePartitioning bsp)
+{
+	_bsp = bsp;
+}
 
 void PhysicsEngine::AddCollision(Rigidbody* myBody, Rigidbody* otherBody)
 {
@@ -188,7 +179,6 @@ void PhysicsEngine::AddCollision(Rigidbody* myBody, Rigidbody* otherBody)
 		_collisions.emplace_back(std::pair<Rigidbody*, Rigidbody*>(myBody, otherBody));
 	}
 }
-
 bool PhysicsEngine::CheckCollisionDone(Rigidbody* myBody, Rigidbody* otherBody) 
 {
 	for (auto pair : _collisions)
@@ -200,13 +190,7 @@ bool PhysicsEngine::CheckCollisionDone(Rigidbody* myBody, Rigidbody* otherBody)
 	}
 	return false;
 }
-
 void PhysicsEngine::ClearCollisions() 
 {
 	_collisions.clear();
-}
-
-void PhysicsEngine::SetBSP(BinarySpacePartitioning* bsp) 
-{
-	_bsp = bsp;
 }
