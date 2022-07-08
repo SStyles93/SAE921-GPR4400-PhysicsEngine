@@ -57,10 +57,6 @@ void World::Init()
 	}*/
 
 }
-
-/// <summary>
-/// Looks for the user's interaction
-/// </summary>
 void World::CheckEvents()
 {
 	sf::Event event;
@@ -114,18 +110,10 @@ void World::CheckEvents()
 		}
 	}
 }
-
-/// <summary>
-/// The physics update of the engine
-/// </summary>
 void World::FixedUpdate() 
 {
 	_engine->PhysicsUpdate(_deltaTime);
 }
-
-/// <summary>
-/// The visual update of the world
-/// </summary>
 void World::Update() 
 {
 	//clear all elements from background
@@ -142,10 +130,6 @@ void World::Update()
 	_window.display();
 }
 
-/// <summary>
-/// Adds an entity and the given position
-/// </summary>
-/// <param name="position">The position (Vector2i)</param>
 void World::AddCircleEntity(sf::Vector2i position)
 {
 	Vector2 positionInMeters = Vector2(SFMLUtilities::SfmlToWorld(position, _window));
@@ -173,11 +157,6 @@ void World::AddCircleEntity(sf::Vector2i position)
 	//Register entity to the world
 	_entities.emplace_back(std::move(entity1));
 }
-
-/// <summary>
-/// Adds an entity and the given position
-/// </summary>
-/// <param name="position">The position (Vector2i)</param>
 void World::AddBoxEntity(sf::Vector2i position)
 {
 	Vector2 positionInMeters = Vector2(SFMLUtilities::SfmlToWorld(position, _window));

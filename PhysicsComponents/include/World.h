@@ -9,15 +9,39 @@ class World
 {
 public:
 	
+	/// <summary>
+	/// Loops through the different Updates
+	/// </summary>
+	/// <returns></returns>
 	int Loop();
 
+	/// <summary>
+	/// Initialises all the elements used for the world
+	/// </summary>
 	void Init();
+	/// <summary>
+	/// Looks for the user's interaction
+	/// </summary>
 	void CheckEvents();
+	/// <summary>
+	/// The physics update of the engine
+	/// </summary>
 	void FixedUpdate();
+	/// <summary>
+	/// The visual update of the world
+	/// </summary>
 	void Update();
 
-	void AddCircleEntity(sf::Vector2i);
-	void AddBoxEntity(sf::Vector2i);
+	/// <summary>
+	/// Adds an entity and the given position
+	/// </summary>
+	/// <param name="position">The position (Vector2i)</param>
+	void AddCircleEntity(sf::Vector2i position);
+	/// <summary>
+	/// Adds an entity and the given position
+	/// </summary>
+	/// <param name="position">The position (Vector2i)</param>
+	void AddBoxEntity(sf::Vector2i position);
 
 private:
 
