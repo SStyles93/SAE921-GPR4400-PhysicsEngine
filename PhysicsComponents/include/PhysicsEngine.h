@@ -61,7 +61,7 @@ public:
 	/// Sets the gravity of the PhysicsEngine
 	/// </summary>
 	/// <param name="gravity">The Y value of gravity (float)(Vector2)</param>
-	void SetGravity(float);
+	void SetGravity(float gravity);
 	
 	/// <summary>
 	/// Sets the Binary Space Partitioning member of the physics engine

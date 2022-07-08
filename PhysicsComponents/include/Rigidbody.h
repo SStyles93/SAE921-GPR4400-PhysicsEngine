@@ -60,15 +60,15 @@ public:
 	/// <returns>The gravity scale (float)</returns>
 	float GetGravityScale();
 	/// <summary>
-	/// Retruns the Kinematic state of the rigidbody
-	/// </summary>
-	/// <returns>True if the rigidbody is static</returns>
-	bool IsStatic();
-	/// <summary>
 	/// Gets the BSP ID
 	/// </summary>
 	/// <returns>The ID of the rigidbody (int, for BSP)</returns>
 	int GetId();
+	/// <summary>
+	/// Retruns the Kinematic state of the rigidbody
+	/// </summary>
+	/// <returns>True if the rigidbody is static</returns>
+	bool IsStatic();
 
 #pragma endregion
 #pragma region Setters

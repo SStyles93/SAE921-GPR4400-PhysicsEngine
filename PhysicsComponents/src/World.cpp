@@ -147,7 +147,7 @@ void World::AddCircleEntity(sf::Vector2i position)
 	entity1->GetRigidbody()->SetCollider(std::make_unique<SphereCollider>(positionInMeters, 20.0f / SFMLUtilities::pixelsMetersRatio));
 	
 	//Sets the bounciness of the entity
-	entity1->GetRigidbody()->SetBounciness(2.0f);
+	//entity1->GetRigidbody()->SetBounciness(1.0f);
 	
 	////Sets the Rigibody to static
 	//entity1->GetRigidbody()->IsKinematic(false);
