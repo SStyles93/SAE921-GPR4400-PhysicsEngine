@@ -2,6 +2,8 @@
 #include "Collider.h"
 #include "SphereCollider.h"
 
+class SphereCollider;
+
 class BoxCollider : public Collider
 {
 public:
@@ -32,6 +34,11 @@ public:
 	/// <returns>The center (Vector2)</returns>
 	Vector2& GetCenter();
 	/// <summary>
+	/// Gets the half extent of the BoxCollider
+	/// </summary>
+	/// <returns>The half extent (Vector2)</returns>
+	Vector2& GetHalfExtent();
+	/// <summary>
 	/// Sets the center of the BoxCollider
 	/// </summary>
 	/// <param name="center">The center (Vector2)</param>
@@ -52,7 +59,7 @@ public:
 	/// <param name="sphereCollider">The other SphereCollider</param>
 	/// <param name="mtv">The minimal translation vector</param>
 	/// <returns>True is there is an overlap</returns>
-	static bool IsOverlappingSphere(BoxCollider* myBox, SphereCollider* sphereCollider, Vector2& mtv);
+	static bool IsOverlappingSphere(BoxCollider* myBox, SphereCollider* otherSphere, Vector2& mtv);
 
 private:
 

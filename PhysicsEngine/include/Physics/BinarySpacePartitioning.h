@@ -1,9 +1,9 @@
 #pragma once
 #include <list>
-#include "Vector2.h"
-#include "Space.h"
 #include <math.h>
 #include <utility>
+#include "Maths/Vector2.h"
+#include "Space.h"
 //#include <queue>
 
 #pragma region BSP SpaceVersion

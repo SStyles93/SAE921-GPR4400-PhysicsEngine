@@ -1,4 +1,4 @@
-#include "World.h"
+#include "Graphics/World.h"
 typedef std::chrono::high_resolution_clock Clock;
 
 int World::Loop() 
@@ -148,7 +148,7 @@ void World::AddCircleEntity(sf::Vector2i position)
 	
 	//Sets the bounciness of the entity
 	//entity1->GetRigidbody()->SetBounciness(1.0f);
-	
+
 	////Sets the Rigibody to static
 	//entity1->GetRigidbody()->IsKinematic(false);
 
@@ -176,8 +176,8 @@ void World::AddBoxEntity(sf::Vector2i position)
 	////Sets the bounciness of the entity
 	//entity1->GetRigidbody()->SetBounciness(1.0f);
 
-	//Sets the body to static
-	entity1->GetRigidbody()->IsKinematic(false);
+	////Sets the body to static
+	//entity1->GetRigidbody()->IsKinematic(false);
 
 	//Register entities to the physics engine
 	_engine->RegisterRigidbody(entity1->GetRigidbody());

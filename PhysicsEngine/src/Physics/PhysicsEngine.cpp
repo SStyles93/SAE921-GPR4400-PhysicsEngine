@@ -1,4 +1,4 @@
-#include "PhysicsEngine.h"
+#include "Physics/PhysicsEngine.h"
 
 void PhysicsEngine::PhysicsUpdate(float deltaTime) 
 {
@@ -90,7 +90,7 @@ void PhysicsEngine::CheckCollisions(Rigidbody* myRigidbody)
 			}
 			else if (myBox2 != nullptr && otherSphere2 != nullptr) 
 			{
-				if (BoxCollider::IsOverlappingSphere(myBox2, otherSphere2, mtv))
+				if (SphereCollider::IsOverlappingBox(otherSphere2, myBox2, mtv))
 				{
 					myBox2->IsColliding(true);
 					SolveCollision(myRigidbody, other);

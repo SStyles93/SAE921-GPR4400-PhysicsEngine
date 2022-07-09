@@ -1,6 +1,6 @@
 #pragma once
 #include "SFML/Graphics.hpp"
-#include "Vector2.h"
+#include "Maths/Vector2.h"
 
 namespace SFMLUtilities
 {

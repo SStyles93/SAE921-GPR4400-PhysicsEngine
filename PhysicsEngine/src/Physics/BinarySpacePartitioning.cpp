@@ -1,4 +1,4 @@
-#include "BinarySpacePartitioning.h"
+#include "Physics/BinarySpacePartitioning.h"
 
 
 BinarySpacePartitioning::BinarySpacePartitioning(float xSize, float ySize, int divisionFactor)

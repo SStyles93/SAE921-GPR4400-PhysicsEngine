@@ -1,4 +1,4 @@
-#include "Entity.h"
+#include "Graphics/Entity.h"
 
 
 Entity::Entity(std::unique_ptr<sf::Shape> shape) : _shape(std::move(shape)){}

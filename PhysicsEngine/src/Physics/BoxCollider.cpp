@@ -1,4 +1,4 @@
-#include "BoxCollider.h"
+#include "Physics/BoxCollider.h"
 
 BoxCollider::BoxCollider(Vector2 center, float size) : _center(center) 
 {
@@ -20,6 +20,10 @@ BoxCollider::~BoxCollider(){}
 Vector2& BoxCollider::GetCenter() 
 {
 	return _center;
+}
+Vector2& BoxCollider::GetHalfExtent() 
+{
+	return _halfExtent;
 }
 void BoxCollider::SetCenter(const Vector2& center) 
 {
@@ -50,12 +54,12 @@ bool BoxCollider::IsOverlappingBox(BoxCollider* myBox, BoxCollider* otherBox, Ve
 
 	return true;
 }
-bool BoxCollider::IsOverlappingSphere(BoxCollider* myBox, SphereCollider* sphereCollider, Vector2& mtv) 
+bool BoxCollider::IsOverlappingSphere(BoxCollider* myBox, SphereCollider* otherSphere, Vector2& mtv) 
 {
-	Vector2 distance = sphereCollider->GetCenter() - myBox->_center;
+	Vector2 distance = otherSphere->GetCenter() - myBox->_center;
 
 	float distanceMagnitude = distance.Magnitude();
-	float radiusSum = myBox->_halfExtent.Magnitude() + sphereCollider->GetRadius();
+	float radiusSum = myBox->_halfExtent.Magnitude() + otherSphere->GetRadius();
 
 	float mtvDifference = radiusSum - distanceMagnitude;
 	mtv = distance.Normalized() * -mtvDifference;

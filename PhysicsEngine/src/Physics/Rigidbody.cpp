@@ -1,4 +1,4 @@
-#include "Rigidbody.h"
+#include "Physics/Rigidbody.h"
 
 Rigidbody::Rigidbody(){}
 Rigidbody::~Rigidbody(){}

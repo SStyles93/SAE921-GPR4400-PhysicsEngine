@@ -1,7 +1,7 @@
 #pragma once
 #include "SFML/Graphics.hpp"
-#include "Rigidbody.h"
-#include "Collider.h"
+#include "Physics/Rigidbody.h"
+#include "Physics/Collider.h"
 #include "SfmlUtilities.h"
 
 class Entity : public sf::Drawable, public sf::Transformable

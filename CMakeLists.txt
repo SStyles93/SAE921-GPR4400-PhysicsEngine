@@ -7,5 +7,5 @@ cmake_minimum_required (VERSION 3.8)
 project ("SAE921-GPR4400-PhysicsEngine")
 
 # Include sub-projects.
-set(EXECUTABLE_CUSTOM_NAME "PhysicsComponents")
-add_subdirectory ("PhysicsComponents")
+set(EXECUTABLE_CUSTOM_NAME "PhysicsEngine")
+add_subdirectory ("PhysicsEngine")

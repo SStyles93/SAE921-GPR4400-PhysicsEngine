@@ -1,4 +1,4 @@
-#include "Space.h"
+#include "Physics/Space.h"
 
 Space::Space(Vector2 minPoint, Vector2 maxPoint) : _minPoint(minPoint), _maxPoint(maxPoint) {}
 Space::Space() {}

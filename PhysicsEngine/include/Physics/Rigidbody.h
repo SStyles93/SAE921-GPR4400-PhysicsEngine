@@ -1,6 +1,6 @@
 #pragma once
 #include <cstdlib>
-#include "Vector2.h"
+#include "Maths/Vector2.h"
 #include "Collider.h"
 #include "SphereCollider.h"
 #include "BoxCollider.h"

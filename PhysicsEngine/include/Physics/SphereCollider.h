@@ -1,5 +1,8 @@
 #pragma once
 #include "Collider.h"
+#include "BoxCollider.h"
+
+class BoxCollider;
 
 class SphereCollider : public Collider
 {
@@ -37,6 +40,14 @@ public:
 	/// <param name="mtv">The minimum translation vector from the overlapping (Vector2)</param>
 	/// <returns>True if SphereColliders are overlapping</returns>
 	static bool IsOverlappingSphere(SphereCollider* mySphere, SphereCollider* otherSphere, Vector2& mtv);
+	/// <summary>
+	/// Checks if the SphereCollider is overlapping with a BoxCollider
+	/// </summary>
+	/// <param name="mySphere">The SphereCollider</param>
+	/// <param name="boxCollider">The BoxCollider</param>
+	/// <param name="mtv">The minimum translation vector from the overlapping (Vector2)</param>
+	/// <returns>True if the SphereCollider is overlapping with the BoxCollider</returns>
+	static bool IsOverlappingBox(SphereCollider* mySphere, BoxCollider* otherBox, Vector2& mtv);
 
 private:
 

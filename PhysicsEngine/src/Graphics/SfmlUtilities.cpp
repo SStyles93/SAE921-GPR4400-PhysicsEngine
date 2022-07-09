@@ -1,4 +1,4 @@
-#include <SfmlUtilities.h>
+#include <Graphics/SfmlUtilities.h>
 
 
 namespace SFMLUtilities
