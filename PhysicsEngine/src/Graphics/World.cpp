@@ -26,7 +26,7 @@ int World::Loop()
 void World::Init() 
 {
     // Basic Setup of the window
-    _window.create(sf::VideoMode(1920, 1080), "PhysicsVisualiser");
+    _window.create(sf::VideoMode(3840, 2160), "PhysicsVisualiser");
 
     // Vertical sync, framerate
     _window.setVerticalSyncEnabled(true);
@@ -41,20 +41,22 @@ void World::Init()
 	_engine->SetBSP(bsp);
 
 	////Check BSP by uncommenting this area
-	/*for (size_t i = 0; i < 50; i++)
-	{
-		AddCircleEntity(sf::Vector2i(_window.getPosition().x * 0.25f, _window.getPosition().y * 0.25f));
-	}
-	for (size_t i = 0; i < 50; i++)
-	{
-		AddCircleEntity(sf::Vector2i(_window.getPosition().x * 0.25f, _window.getPosition().y * 0.75f));
-	}for (size_t i = 0; i < 50; i++)
-	{
-		AddCircleEntity(sf::Vector2i(_window.getPosition().x * 0.75f, _window.getPosition().y * 0.25f));
-	}for (size_t i = 0; i < 50; i++)
-	{
-		AddCircleEntity(sf::Vector2i(_window.getPosition().x * 0.75f, _window.getPosition().y * 0.755f));
-	}*/
+	//for (size_t i = 0; i < 50; i++)
+	//{
+	//	AddCircleEntity(sf::Vector2i(_window.getPosition().x * 0.25f, _window.getPosition().y * 0.25f));
+	//}
+	//for (size_t i = 0; i < 50; i++)
+	//{
+	//	AddCircleEntity(sf::Vector2i(_window.getPosition().x * 0.25f, _window.getPosition().y * 0.75f));
+	//}for (size_t i = 0; i < 50; i++)
+	//{
+	//	AddCircleEntity(sf::Vector2i(_window.getPosition().x * 0.75f, _window.getPosition().y * 0.25f));
+	//}for (size_t i = 0; i < 50; i++)
+	//{
+	//	AddCircleEntity(sf::Vector2i(_window.getPosition().x * 0.75f, _window.getPosition().y * 0.755f));
+	//}
+
+	InitialiseTexts();
 
 }
 void World::CheckEvents()
@@ -97,6 +99,27 @@ void World::CheckEvents()
 			{
 				_engine->AddForce(Vector2(25.0f, 0.0f));
 			}
+			if (event.key.code == sf::Keyboard::Space) 
+			{
+				//Switches the Kinematic State of Rigidbodies
+				for (auto& entity : _entities) 
+				{
+					if (entity->GetRigidbody()->IsStatic()) 
+					{
+						entity->GetRigidbody()->IsKinematic(true);
+					}
+					else
+					{
+						entity->GetRigidbody()->IsKinematic(false);
+					}
+				}
+			}
+			/*if (event.key.code == sf::Keyboard::Delete) 
+			{
+				for (auto& entity : _entities) 
+				{
+				}
+			}*/
 		}
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) 
 		{	
@@ -119,13 +142,18 @@ void World::Update()
 	//clear all elements from background
 	_window.clear();
 
-	//Draw something
+	//Draw all entities
 	for (auto& entity : _entities)
 	{
 		entity->Update(_window);
 		_window.draw(*entity);
 	}
 
+	//Draw all texts
+	for (auto& text : _texts) 
+	{
+		_window.draw(text);
+	}
 	// Display all elements
 	_window.display();
 }
@@ -183,4 +211,66 @@ void World::AddBoxEntity(sf::Vector2i position)
 	_engine->RegisterRigidbody(entity1->GetRigidbody());
 	//Register entity to the world
 	_entities.emplace_back(std::move(entity1));
+}
+
+void World::InitialiseTexts() 
+{
+	//SFML Font loading
+	_font.loadFromFile("data/font/RetroGaming.ttf");
+	//SFML Text Initialisation
+	sf::Text mouseBtnLeftText;
+	mouseBtnLeftText.setFont(_font);
+	mouseBtnLeftText.setFillColor(sf::Color::White);
+	mouseBtnLeftText.setCharacterSize(50);
+	mouseBtnLeftText.setString(sf::String("Mouse L : Add Circle Entity"));
+	mouseBtnLeftText.setPosition(sf::Vector2f(_window.getSize().x * 0.0f, _window.getSize().y * 0.0f));
+	_texts.emplace_back(mouseBtnLeftText);
+
+	sf::Text mouseBtnRightText;
+	mouseBtnRightText.setFont(_font);
+	mouseBtnRightText.setFillColor(sf::Color::White);
+	mouseBtnRightText.setCharacterSize(50);
+	mouseBtnRightText.setString(sf::String("Mouse R : Add Square Entity"));
+	mouseBtnRightText.setPosition(sf::Vector2f(_window.getSize().x * 0.0f, _window.getSize().y * 0.05f));
+	_texts.emplace_back(mouseBtnRightText);
+
+	sf::Text wBtnText;
+	wBtnText.setFont(_font);
+	wBtnText.setFillColor(sf::Color::White);
+	wBtnText.setCharacterSize(50);
+	wBtnText.setString(sf::String("[W] : Add Force Upwards"));
+	wBtnText.setPosition(sf::Vector2f(_window.getSize().x * 0.0f, _window.getSize().y * 0.1f));
+	_texts.emplace_back(wBtnText);
+
+	sf::Text aBtnText;
+	aBtnText.setFont(_font);
+	aBtnText.setFillColor(sf::Color::White);
+	aBtnText.setCharacterSize(50);
+	aBtnText.setString(sf::String("[A] : Add Force Leftwards"));
+	aBtnText.setPosition(sf::Vector2f(_window.getSize().x * 0.0f, _window.getSize().y * 0.15f));
+	_texts.emplace_back(aBtnText);
+
+	sf::Text sBtnText;
+	sBtnText.setFont(_font);
+	sBtnText.setFillColor(sf::Color::White);
+	sBtnText.setCharacterSize(50);
+	sBtnText.setString(sf::String("[S] : Add Force Downwards"));
+	sBtnText.setPosition(sf::Vector2f(_window.getSize().x * 0.0f, _window.getSize().y * 0.2f));
+	_texts.emplace_back(sBtnText);
+
+	sf::Text dBtnText;
+	dBtnText.setFont(_font);
+	dBtnText.setFillColor(sf::Color::White);
+	dBtnText.setCharacterSize(50);
+	dBtnText.setString(sf::String("[D] : Add Force Rightwards"));
+	dBtnText.setPosition(sf::Vector2f(_window.getSize().x * 0.0f, _window.getSize().y * 0.25f));
+	_texts.emplace_back(dBtnText);
+
+	sf::Text SpaceBtnText;
+	SpaceBtnText.setFont(_font);
+	SpaceBtnText.setFillColor(sf::Color::White);
+	SpaceBtnText.setCharacterSize(50);
+	SpaceBtnText.setString(sf::String("[Space] : Switch Kinematic State"));
+	SpaceBtnText.setPosition(sf::Vector2f(_window.getSize().x * 0.0f, _window.getSize().y * 0.30f));
+	_texts.emplace_back(SpaceBtnText);
 }

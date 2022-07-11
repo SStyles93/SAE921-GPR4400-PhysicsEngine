@@ -48,6 +48,10 @@ private:
 	//SFML renderWindow
 	sf::RenderWindow _window;
 	Vector2 _windowCenter;
+	//Font
+	sf::Font _font;
+	//Texts
+	std::vector<sf::Text> _texts;
 
 	//Entities
 	std::vector<std::unique_ptr<Entity>> _entities;
@@ -58,4 +62,9 @@ private:
 	//Time values
 	std::chrono::steady_clock::time_point previousTime;
 	float _deltaTime = 0;
+
+	/// <summary>
+	/// Initialises the texts to display in _window
+	/// </summary>
+	void InitialiseTexts();
 };
