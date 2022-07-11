@@ -39,7 +39,7 @@ void PhysicsEngine::CheckCollisions(Rigidbody* myRigidbody)
 	{
 		_bsp.AssignId(other);
 
-		if (myRigidbody->GetId() != other->GetId() || myRigidbody == other)
+		if (myRigidbody->GetId() != other->GetId() || myRigidbody == other || other->GetId() == -1)
 			continue;
 
 		Vector2 mtv;
@@ -53,12 +53,17 @@ void PhysicsEngine::CheckCollisions(Rigidbody* myRigidbody)
 				if (SphereCollider::IsOverlappingSphere(mySphere, otherSphere, mtv))
 				{
 					mySphere->IsColliding(true);
+					otherSphere->IsColliding(true);
+					mySphere->IsOverlapping(true);
+					otherSphere->IsOverlapping(true);
+
 					SolveCollision(myRigidbody, other);
 					SolveMTV(myRigidbody, other, mtv);
 				}
 				else
 				{
-					//Not yet (SAT etc...)
+					mySphere->IsOverlapping(false);
+					otherSphere->IsOverlapping(false);
 				}
 			}
 
@@ -69,32 +74,59 @@ void PhysicsEngine::CheckCollisions(Rigidbody* myRigidbody)
 				if (BoxCollider::IsOverlappingBox(myBox, otherBox, mtv))
 				{
 					myBox->IsColliding(true);
+					otherBox->IsColliding(true);
+					myBox->IsOverlapping(true);
+					otherBox->IsOverlapping(true);
+
 					SolveCollision(myRigidbody, other);
 					SolveMTV(myRigidbody, other, mtv);
+				}
+				else 
+				{
+					myBox->IsOverlapping(false);
+					otherBox->IsOverlapping(false);
 				}
 			}
 
 			BoxCollider* myBox1 = dynamic_cast<BoxCollider*>(myRigidbody->GetCollider());
-			BoxCollider* myBox2 = dynamic_cast<BoxCollider*>(other->GetCollider());
+			BoxCollider* otherBox1 = dynamic_cast<BoxCollider*>(other->GetCollider());
 
 			SphereCollider* otherSphere1 = dynamic_cast<SphereCollider*>(other->GetCollider());
-			SphereCollider* otherSphere2 = dynamic_cast<SphereCollider*>(myRigidbody->GetCollider());
+			SphereCollider* mySphere1 = dynamic_cast<SphereCollider*>(myRigidbody->GetCollider());
 			if (myBox1 != nullptr && otherSphere1 != nullptr)
 			{
 				if (BoxCollider::IsOverlappingSphere(myBox1, otherSphere1, mtv))
 				{
 					myBox1->IsColliding(true);
+					otherSphere1->IsColliding(true);
+					myBox1->IsOverlapping(true);
+					otherSphere1->IsOverlapping(true);
+
 					SolveCollision(myRigidbody, other);
 					SolveMTV(myRigidbody, other, mtv);
 				}
-			}
-			else if (myBox2 != nullptr && otherSphere2 != nullptr) 
-			{
-				if (SphereCollider::IsOverlappingBox(otherSphere2, myBox2, mtv))
+				else
 				{
-					myBox2->IsColliding(true);
+					myBox1->IsOverlapping(false);
+					otherSphere1->IsOverlapping(false);
+				}
+			}
+			else if (otherBox1 != nullptr && mySphere1 != nullptr)
+			{
+				if (SphereCollider::IsOverlappingBox(mySphere1, otherBox1, mtv))
+				{
+					otherBox1->IsColliding(true);
+					mySphere1->IsColliding(true);
+					otherBox1->IsOverlapping(true);
+					mySphere1->IsOverlapping(true);
+
 					SolveCollision(myRigidbody, other);
 					SolveMTV(myRigidbody, other, mtv);
+				}
+				else
+				{
+					otherBox1->IsOverlapping(false);
+					mySphere1->IsOverlapping(false);
 				}
 			}
 			AddCollision(myRigidbody, other);

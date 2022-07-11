@@ -24,9 +24,15 @@ public:
 	/// </summary>
 	/// <param name="myCollider">The collider to check</param>
 	/// <returns>True if there is an overlap</returns>
-	bool IsOverlapping(Collider* myCollider);
+	bool IsOverlapping();
+	/// <summary>
+	/// Sets the state of overlap.
+	/// </summary>
+	/// <param name="value">the overlap state (bool)</param>
+	void IsOverlapping(bool value);
 
 private:
 
 	bool _isColliding = false;
+	bool _isOverlapping = false;
 };

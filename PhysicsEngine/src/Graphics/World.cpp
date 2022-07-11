@@ -87,15 +87,15 @@ void World::CheckEvents()
 			}
 			if (event.key.code == sf::Keyboard::S)
 			{
-				_engine->AddForce(Vector2(0.0f, -9.81f));
+				_engine->AddForce(Vector2(0.0f, -25.0f));
 			}
 			if (event.key.code == sf::Keyboard::A)
 			{
-				_engine->AddForce(Vector2(-4.0f, 0.0f));
+				_engine->AddForce(Vector2(-25.0f, 0.0f));
 			}
 			if (event.key.code == sf::Keyboard::D)
 			{
-				_engine->AddForce(Vector2(4.0f, 0.0f));
+				_engine->AddForce(Vector2(25.0f, 0.0f));
 			}
 		}
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) 

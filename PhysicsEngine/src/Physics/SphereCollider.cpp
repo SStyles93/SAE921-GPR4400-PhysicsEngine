@@ -36,7 +36,7 @@ bool SphereCollider::IsOverlappingBox(SphereCollider* mySphere, BoxCollider* oth
 	float radiusSum = mySphere->GetRadius() + otherBox->GetHalfExtent().Magnitude();
 
 	float mtvDifference = radiusSum - distanceMagnitude;
-	mtv = distance.Normalized() * -mtvDifference;
+	mtv = distance.Normalized() * mtvDifference;
 
 	return (distanceMagnitude <= radiusSum);
 }

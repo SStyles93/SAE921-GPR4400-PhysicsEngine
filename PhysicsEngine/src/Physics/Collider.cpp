@@ -11,7 +11,11 @@ void Collider::IsColliding(const bool value)
 {
 	_isColliding = value;
 }
-bool Collider::IsOverlapping(Collider* myCollider) 
+bool Collider::IsOverlapping() 
 {
-	return true;
+	return _isOverlapping;
+}
+void Collider::IsOverlapping(bool value) 
+{
+	_isOverlapping = value;
 }

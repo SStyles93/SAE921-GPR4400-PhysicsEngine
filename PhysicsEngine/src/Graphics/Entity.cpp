@@ -21,13 +21,25 @@ void Entity::draw(sf::RenderTarget& target, sf::RenderStates states) const
 		if (_rigidbody->GetCollider()->IsColliding()) 
 		{
 			//Color
-			sf::Color color = sf::Color(0, 255, 0, 255);
-			_shape->setFillColor(color);
+			sf::Color greenColor = sf::Color(0, 255, 0, 255);
+			_shape->setFillColor(greenColor);
+			
 		}
 		else
 		{
 			sf::Color color = sf::Color(255, 255, 255, 255);
 			_shape->setFillColor(color);
+		}
+
+		if (_rigidbody->GetCollider()->IsOverlapping()) 
+		{
+			sf::Color redColor = sf::Color(255, 0, 0, 255);
+			_shape->setOutlineThickness(2.f);
+			_shape->setOutlineColor(redColor);
+		}
+		else
+		{
+			_shape->setOutlineThickness(0.f);
 		}
 	}
 
