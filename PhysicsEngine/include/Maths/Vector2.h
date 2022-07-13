@@ -48,13 +48,17 @@ public:
 	/// </summary>
 	/// <returns>The left tengetn (Vector2)</returns>
 	Vector2 LeftOrtho();
-
+	/// <summary>
+	/// Outputs the X and Y values
+	/// </summary>
+	/// <returns>The X and Y in an std::string</returns>
+	std::string ToString();
+	
 	/// <summary>
 	/// Sets the origin of the Vector2
 	/// </summary>
 	/// <param name="origin">Vector2 origin of the vector</param>
 	void SetOrigin(const Vector2& origin);
-	/*void draw(sf::RenderTarget&, sf::RenderStates) const override;*/
 
 	//Operator overloading
 	Vector2 operator+(const Vector2&);

@@ -152,6 +152,6 @@ private:
 
 	bool _isStatic = false;
 
-	int _id = -1;
+	int _id = -2;
 
 };

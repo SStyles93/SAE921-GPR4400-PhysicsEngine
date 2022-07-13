@@ -34,6 +34,7 @@ void PhysicsEngine::CheckCollisions(Rigidbody* myRigidbody)
 	bool isColliding = false;
 
 	_bsp.AssignId(myRigidbody);
+	if (myRigidbody->GetId() == -1) return;
 
 	for(auto& other : _rigidbodies)
 	{
@@ -225,4 +226,14 @@ bool PhysicsEngine::CheckCollisionDone(Rigidbody* myBody, Rigidbody* otherBody)
 void PhysicsEngine::ClearCollisions() 
 {
 	_collisions.clear();
+}
+
+void PhysicsEngine::Clear() 
+{
+	_rigidbodies.clear();
+}
+
+Vector2 PhysicsEngine::GetGravity() 
+{
+	return _gravity;
 }

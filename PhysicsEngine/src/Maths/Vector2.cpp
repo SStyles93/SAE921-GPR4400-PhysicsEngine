@@ -45,11 +45,11 @@ void Vector2::SetOrigin(const Vector2& origin)
 {
 	_line[0] = sf::Vector2(origin._x, origin._y);
 }
-//void Vector2::draw(sf::RenderTarget& target, sf::RenderStates states) const 
-//{
-//	states.transform *= getTransform();
-//	target.draw(_line, 2, sf::Lines);
-//}
+
+std::string Vector2::ToString() 
+{
+	return std::string(std::to_string(_x) + " , " + std::to_string(_y));
+}
 
 Vector2 Vector2::operator+(const Vector2& v1)
 {

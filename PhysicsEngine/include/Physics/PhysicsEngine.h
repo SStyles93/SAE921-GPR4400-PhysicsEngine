@@ -69,13 +69,23 @@ public:
 	/// <param name="bsp">BSP</param>
 	void SetBSP(BinarySpacePartitioning bsp);
 
+	/// <summary>
+	/// Removes all rigidbodies
+	/// </summary>
+	void Clear();
+
+	/// <summary>
+	/// Gets the Gravity
+	/// </summary>
+	/// <returns>The gravity (Vector2)</returns>
+	Vector2 GetGravity();
 
 private:
 
 	std::vector<Rigidbody*> _rigidbodies;
 	std::vector<Vector2> _forces;
 
-	Vector2 _gravity = Vector2(0.0f, -9.81f);
+	Vector2 _gravity = Vector2(0.0f, 0.0f);
 
 	std::vector<std::pair<Rigidbody*, Rigidbody*>> _collisions;
 
@@ -98,5 +108,6 @@ private:
 	/// Clears all the collisions from the collision vector
 	/// </summary>
 	void ClearCollisions();
+
 
 };

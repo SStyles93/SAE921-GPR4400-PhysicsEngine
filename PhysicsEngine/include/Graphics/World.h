@@ -42,10 +42,15 @@ public:
 	/// </summary>
 	/// <param name="position">The position (Vector2i)</param>
 	void AddBoxEntity(sf::Vector2i position);
+	/// <summary>
+	/// Removes all entities
+	/// </summary>
+	void Clear();
 
 private:
 
-	//SFML renderWindow
+	//SFML 
+	//RenderWindow
 	sf::RenderWindow _window;
 	Vector2 _windowCenter;
 	//Font

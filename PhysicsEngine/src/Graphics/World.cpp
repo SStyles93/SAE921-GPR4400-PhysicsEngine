@@ -16,7 +16,7 @@ int World::Loop()
 		//elapsed time is in nanoseconds / 1'000'000'000 for seconds
 		_deltaTime = elapsed.count() / 1000000000.0f;
 
-		////Use to check frame rate;
+		////Uncomment to check frame rate;
 		//std::cout << _deltaTime << std::endl;
 	}
 
@@ -41,19 +41,19 @@ void World::Init()
 	_engine->SetBSP(bsp);
 
 	////Check BSP by uncommenting this area
-	//for (size_t i = 0; i < 50; i++)
+	//for (size_t i = 0; i < 100; i++)
 	//{
-	//	AddCircleEntity(sf::Vector2i(_window.getPosition().x * 0.25f, _window.getPosition().y * 0.25f));
+	//	AddCircleEntity(sf::Vector2i(_window.getSize().x * 0.25f, _window.getSize().y * 0.25f));
 	//}
-	//for (size_t i = 0; i < 50; i++)
+	//for (size_t i = 0; i < 100; i++)
 	//{
-	//	AddCircleEntity(sf::Vector2i(_window.getPosition().x * 0.25f, _window.getPosition().y * 0.75f));
-	//}for (size_t i = 0; i < 50; i++)
+	//	AddCircleEntity(sf::Vector2i(_window.getSize().x * 0.25f, _window.getSize().y * 0.75f));
+	//}for (size_t i = 0; i < 100; i++)
 	//{
-	//	AddCircleEntity(sf::Vector2i(_window.getPosition().x * 0.75f, _window.getPosition().y * 0.25f));
-	//}for (size_t i = 0; i < 50; i++)
+	//	AddCircleEntity(sf::Vector2i(_window.getSize().x * 0.75f, _window.getSize().y * 0.25f));
+	//}for (size_t i = 0; i < 100; i++)
 	//{
-	//	AddCircleEntity(sf::Vector2i(_window.getPosition().x * 0.75f, _window.getPosition().y * 0.755f));
+	//	AddCircleEntity(sf::Vector2i(_window.getSize().x * 0.75f, _window.getSize().y * 0.755f));
 	//}
 
 	InitialiseTexts();
@@ -81,23 +81,46 @@ void World::CheckEvents()
 			_window.setView(view);
 		}
 
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+		{
+			AddCircleEntity(sf::Mouse::getPosition(_window));
+			_texts.at(1).setFillColor(sf::Color::Green);
+		}
+		else
+		{
+			_texts.at(1).setFillColor(sf::Color::White);
+		}
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
+		{
+			AddBoxEntity(sf::Mouse::getPosition(_window));
+			_texts.at(2).setFillColor(sf::Color::Green);
+		}
+		else
+		{
+			_texts.at(2).setFillColor(sf::Color::White);
+		}
+
 		if (event.type == sf::Event::KeyPressed)
 		{
 			if (event.key.code == sf::Keyboard::W)
 			{
 				_engine->AddForce(Vector2(0.0f, 25.0f));
-			}
-			if (event.key.code == sf::Keyboard::S)
-			{
-				_engine->AddForce(Vector2(0.0f, -25.0f));
+				_texts.at(3).setFillColor(sf::Color::Green);
 			}
 			if (event.key.code == sf::Keyboard::A)
 			{
 				_engine->AddForce(Vector2(-25.0f, 0.0f));
+				_texts.at(4).setFillColor(sf::Color::Green);
+			}
+			if (event.key.code == sf::Keyboard::S)
+			{
+				_engine->AddForce(Vector2(0.0f, -25.0f));
+				_texts.at(5).setFillColor(sf::Color::Green);
 			}
 			if (event.key.code == sf::Keyboard::D)
 			{
 				_engine->AddForce(Vector2(25.0f, 0.0f));
+				_texts.at(6).setFillColor(sf::Color::Green);
 			}
 			if (event.key.code == sf::Keyboard::Space) 
 			{
@@ -113,23 +136,65 @@ void World::CheckEvents()
 						entity->GetRigidbody()->IsKinematic(false);
 					}
 				}
+				_texts.at(7).setFillColor(sf::Color::Green);
 			}
-			/*if (event.key.code == sf::Keyboard::Delete) 
+			if (event.key.code == sf::Keyboard::Delete) 
 			{
-				for (auto& entity : _entities) 
-				{
-				}
-			}*/
+				Clear();
+				_texts.at(8).setFillColor(sf::Color::Green);
+			}
+			if (event.key.code == sf::Keyboard::Num1) 
+			{
+				_engine->SetGravity(_engine->GetGravity() + Vector2(0.0f, -1.00f));
+				_texts[0].setString(sf::String("Gravity : ") + sf::String(_engine->GetGravity().ToString()));
+				_texts.at(0).setFillColor(sf::Color::Green);
+				_texts.at(9).setFillColor(sf::Color::Green);
+			}
+			if (event.key.code == sf::Keyboard::Num2) 
+			{
+				_engine->SetGravity(_engine->GetGravity() + Vector2(0.0f, 1.00f));
+				_texts[0].setString(sf::String("Gravity : ") + sf::String(_engine->GetGravity().ToString()));
+				_texts.at(0).setFillColor(sf::Color::Green);
+				_texts.at(10).setFillColor(sf::Color::Green);
+			}
+
 		}
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) 
-		{	
-			AddCircleEntity(sf::Mouse::getPosition(_window));
-			//AddBoxEntity(sf::Mouse::getPosition(_window));
-		}
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
+		else if(event.type == sf::Event::KeyReleased)
 		{
-			//AddCircleEntity(sf::Mouse::getPosition(_window));
-			AddBoxEntity(sf::Mouse::getPosition(_window));
+			if (event.key.code == sf::Keyboard::W)
+			{
+				_texts.at(3).setFillColor(sf::Color::White);
+			}
+			if (event.key.code == sf::Keyboard::A)
+			{
+				_texts.at(4).setFillColor(sf::Color::White);
+			}
+			if (event.key.code == sf::Keyboard::S)
+			{
+				_texts.at(5).setFillColor(sf::Color::White);
+			}
+			if (event.key.code == sf::Keyboard::D)
+			{
+				_texts.at(6).setFillColor(sf::Color::White);
+			}
+			if (event.key.code == sf::Keyboard::Space)
+			{
+				_texts.at(7).setFillColor(sf::Color::White);
+			}
+			if (event.key.code == sf::Keyboard::Delete)
+			{
+				_texts.at(8).setFillColor(sf::Color::White);
+			}
+			if (event.key.code == sf::Keyboard::Num1)
+			{
+				_texts.at(9).setFillColor(sf::Color::White);
+				_texts.at(0).setFillColor(sf::Color::White);
+			}
+			if (event.key.code == sf::Keyboard::Num2)
+			{
+				_texts.at(10).setFillColor(sf::Color::White);
+				_texts.at(0).setFillColor(sf::Color::White);
+			}
 		}
 	}
 }
@@ -171,7 +236,7 @@ void World::AddCircleEntity(sf::Vector2i position)
 
 	entity1->GetRigidbody()->SetPosition(positionInMeters);
 	entity1->GetRigidbody()->SetMass(1.0f);
-	entity1->GetRigidbody()->SetGravityScale(0.0f);
+	entity1->GetRigidbody()->SetGravityScale(1.0f);
 	entity1->GetRigidbody()->SetCollider(std::make_unique<SphereCollider>(positionInMeters, 20.0f / SFMLUtilities::pixelsMetersRatio));
 	
 	//Sets the bounciness of the entity
@@ -198,7 +263,7 @@ void World::AddBoxEntity(sf::Vector2i position)
 
 	entity1->GetRigidbody()->SetPosition(positionInMeters);
 	entity1->GetRigidbody()->SetMass(1.0f);
-	entity1->GetRigidbody()->SetGravityScale(0.0f);
+	entity1->GetRigidbody()->SetGravityScale(1.0f);
 	entity1->GetRigidbody()->SetCollider(std::make_unique<BoxCollider>(positionInMeters, 50.0f / SFMLUtilities::pixelsMetersRatio));
 	
 	////Sets the bounciness of the entity
@@ -212,17 +277,33 @@ void World::AddBoxEntity(sf::Vector2i position)
 	//Register entity to the world
 	_entities.emplace_back(std::move(entity1));
 }
+void World::Clear() 
+{
+	_entities.clear();
+	_engine->Clear();
+	_engine->SetGravity(Vector2(0.0f, 0.0f));
+	_texts[0].setString(sf::String("Gravity : ") + sf::String(_engine->GetGravity().ToString()));
+}
 
 void World::InitialiseTexts() 
 {
 	//SFML Font loading
 	_font.loadFromFile("data/font/RetroGaming.ttf");
+
 	//SFML Text Initialisation
+	sf::Text gravityText;
+	gravityText.setFont(_font);
+	gravityText.setFillColor(sf::Color::White);
+	gravityText.setCharacterSize(50);
+	gravityText.setString(sf::String("Gravity : ") + sf::String(_engine->GetGravity().ToString()));
+	gravityText.setPosition(sf::Vector2f(_window.getSize().x * 0.4f, _window.getSize().y * 0.0f));
+	_texts.emplace_back(gravityText);
+
 	sf::Text mouseBtnLeftText;
 	mouseBtnLeftText.setFont(_font);
 	mouseBtnLeftText.setFillColor(sf::Color::White);
 	mouseBtnLeftText.setCharacterSize(50);
-	mouseBtnLeftText.setString(sf::String("Mouse L : Add Circle Entity"));
+	mouseBtnLeftText.setString(sf::String("Mouse [L] : Add Circle Entity"));
 	mouseBtnLeftText.setPosition(sf::Vector2f(_window.getSize().x * 0.0f, _window.getSize().y * 0.0f));
 	_texts.emplace_back(mouseBtnLeftText);
 
@@ -230,7 +311,7 @@ void World::InitialiseTexts()
 	mouseBtnRightText.setFont(_font);
 	mouseBtnRightText.setFillColor(sf::Color::White);
 	mouseBtnRightText.setCharacterSize(50);
-	mouseBtnRightText.setString(sf::String("Mouse R : Add Square Entity"));
+	mouseBtnRightText.setString(sf::String("Mouse [R] : Add Square Entity"));
 	mouseBtnRightText.setPosition(sf::Vector2f(_window.getSize().x * 0.0f, _window.getSize().y * 0.05f));
 	_texts.emplace_back(mouseBtnRightText);
 
@@ -266,11 +347,35 @@ void World::InitialiseTexts()
 	dBtnText.setPosition(sf::Vector2f(_window.getSize().x * 0.0f, _window.getSize().y * 0.25f));
 	_texts.emplace_back(dBtnText);
 
-	sf::Text SpaceBtnText;
-	SpaceBtnText.setFont(_font);
-	SpaceBtnText.setFillColor(sf::Color::White);
-	SpaceBtnText.setCharacterSize(50);
-	SpaceBtnText.setString(sf::String("[Space] : Switch Kinematic State"));
-	SpaceBtnText.setPosition(sf::Vector2f(_window.getSize().x * 0.0f, _window.getSize().y * 0.30f));
-	_texts.emplace_back(SpaceBtnText);
+	sf::Text spaceBtnText;
+	spaceBtnText.setFont(_font);
+	spaceBtnText.setFillColor(sf::Color::White);
+	spaceBtnText.setCharacterSize(50);
+	spaceBtnText.setString(sf::String("[Space] : Switch Kinematic State"));
+	spaceBtnText.setPosition(sf::Vector2f(_window.getSize().x * 0.0f, _window.getSize().y * 0.30f));
+	_texts.emplace_back(spaceBtnText);
+
+	sf::Text deleteBtnText;
+	deleteBtnText.setFont(_font);
+	deleteBtnText.setFillColor(sf::Color::White);
+	deleteBtnText.setCharacterSize(50);
+	deleteBtnText.setString(sf::String("[Del] : Clear world"));
+	deleteBtnText.setPosition(sf::Vector2f(_window.getSize().x * 0.0f, _window.getSize().y * 0.35f));
+	_texts.emplace_back(deleteBtnText);
+	
+	sf::Text num1BtnText;
+	num1BtnText.setFont(_font);
+	num1BtnText.setFillColor(sf::Color::White);
+	num1BtnText.setCharacterSize(50);
+	num1BtnText.setString(sf::String("[1] : Gravity -1 (Downwards)"));
+	num1BtnText.setPosition(sf::Vector2f(_window.getSize().x * 0.0f, _window.getSize().y * 0.8f));
+	_texts.emplace_back(num1BtnText);
+	
+	sf::Text num2BtnText;
+	num2BtnText.setFont(_font);
+	num2BtnText.setFillColor(sf::Color::White);
+	num2BtnText.setCharacterSize(50);
+	num2BtnText.setString(sf::String("[2] : Gravity +1 (Upwards)"));
+	num2BtnText.setPosition(sf::Vector2f(_window.getSize().x * 0.0f, _window.getSize().y * 0.85f));
+	_texts.emplace_back(num2BtnText);
 }

@@ -36,6 +36,10 @@ BinarySpacePartitioning::~BinarySpacePartitioning() {}
 
 void BinarySpacePartitioning::AssignId(Rigidbody* rigidbody) 
 {
+	if (_positions.size() == 0) return;
+
+	rigidbody->SetId(-1);
+
 	for (int posIdx = _positions.size()-1; posIdx >= 0; posIdx--)
 	{
 		if (rigidbody->GetPosition()._x > _positions[posIdx].first) 
