@@ -16,8 +16,9 @@ int World::Loop()
 		//elapsed time is in nanoseconds / 1'000'000'000 for seconds
 		_deltaTime = elapsed.count() / 1000000000.0f;
 
-		////Uncomment to check frame rate;
+		//Uncomment to check frame rate;
 		//std::cout << _deltaTime << std::endl;
+		_texts[11].setString(sf::String("DeltaTime : " + std::to_string(_deltaTime)));
 	}
 
 	return EXIT_SUCCESS;
@@ -378,4 +379,12 @@ void World::InitialiseTexts()
 	num2BtnText.setString(sf::String("[2] : Gravity +1 (Upwards)"));
 	num2BtnText.setPosition(sf::Vector2f(_window.getSize().x * 0.0f, _window.getSize().y * 0.85f));
 	_texts.emplace_back(num2BtnText);
+
+	sf::Text frameRateText;
+	frameRateText.setFont(_font);
+	frameRateText.setFillColor(sf::Color::White);
+	frameRateText.setCharacterSize(50);
+	frameRateText.setString(sf::String("DeltaTime : " + std::to_string(_deltaTime)));
+	frameRateText.setPosition(sf::Vector2f(_window.getSize().x * 0.8f, _window.getSize().y * 0.0f));
+	_texts.emplace_back(frameRateText);
 }
