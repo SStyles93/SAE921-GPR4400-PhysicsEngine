@@ -31,16 +31,8 @@ void PhysicsEngine::PhysicsUpdate(float deltaTime)
 }
 void PhysicsEngine::CheckCollisions(Rigidbody* myRigidbody) 
 {
-	_bsp.AssignId(myRigidbody);
-	if (myRigidbody->GetId() == -1) return;
-
 	for(auto& other : _rigidbodies)
 	{
-		_bsp.AssignId(other);
-
-		if (myRigidbody->GetId() != other->GetId() || myRigidbody == other || other->GetId() == -1)
-			continue;
-
 		Vector2 mtv;
 
 		if (myRigidbody != other && !CheckCollisionDone(myRigidbody, other)) 
@@ -198,11 +190,6 @@ void PhysicsEngine::SetGravity(float gravity)
 	_gravity = Vector2(0.0f, gravity);
 }
 
-void PhysicsEngine::SetBSP(BinarySpacePartitioning bsp)
-{
-	_bsp = bsp;
-}
-
 void PhysicsEngine::AddCollision(Rigidbody* myBody, Rigidbody* otherBody)
 {
 	if (!CheckCollisionDone(myBody, otherBody)) 
@@ -234,9 +221,4 @@ void PhysicsEngine::Clear()
 Vector2 PhysicsEngine::GetGravity() 
 {
 	return _gravity;
-}
-
-BinarySpacePartitioning PhysicsEngine::GetBSP() 
-{
-	return _bsp;
 }

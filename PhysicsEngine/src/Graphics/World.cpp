@@ -37,10 +37,11 @@ void World::Init()
 	//Create the physics engine
 	_engine = std::make_unique<PhysicsEngine>();
 
-	BinarySpacePartitioning bsp =
-		BinarySpacePartitioning(
-			SFMLUtilities::pixelsToMeters(_window.getSize()), 4);
-	_engine->SetBSP(bsp);
+	//BinarySpacePartitioning bsp =
+	//	/*BinarySpacePartitioning(
+	//		SFMLUtilities::pixelsToMeters(_window.getSize()), 4);*/
+	//	BinarySpacePartitioning(Vector2(1620, 1080), 4);
+	//_engine->SetBSP(bsp);
 
 	////Check BSP by uncommenting this area
 	//for (size_t i = 0; i < 100; i++)

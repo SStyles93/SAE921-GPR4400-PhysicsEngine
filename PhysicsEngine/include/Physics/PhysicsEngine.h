@@ -5,7 +5,6 @@
 #include "Collider.h"
 #include "SphereCollider.h"
 #include "BoxCollider.h"
-#include "BinarySpacePartitioning.h";
 
 class PhysicsEngine 
 {
@@ -62,12 +61,6 @@ public:
 	/// </summary>
 	/// <param name="gravity">The Y value of gravity (float)(Vector2)</param>
 	void SetGravity(float gravity);
-	
-	/// <summary>
-	/// Sets the Binary Space Partitioning member of the physics engine
-	/// </summary>
-	/// <param name="bsp">BSP</param>
-	void SetBSP(BinarySpacePartitioning bsp);
 
 	/// <summary>
 	/// Removes all rigidbodies
@@ -79,12 +72,6 @@ public:
 	/// </summary>
 	/// <returns>The gravity (Vector2)</returns>
 	Vector2 GetGravity();
-
-	/// <summary>
-	/// Gets the BSP of the engine
-	/// </summary>
-	/// <returns>BinarySpacePartitionning</returns>
-	BinarySpacePartitioning GetBSP();
 
 private:
 
@@ -113,5 +100,4 @@ private:
 
 	std::vector<std::pair<Rigidbody*, Rigidbody*>> _collisions;
 
-	BinarySpacePartitioning _bsp;
 };
