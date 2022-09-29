@@ -4,7 +4,6 @@
 #include <utility>
 #include "Maths/Vector2.h"
 #include "Space.h"
-//#include <queue>
 
 #pragma region BSP SpaceVersion
 
@@ -57,6 +56,12 @@ public:
 	/// </summary>
 	/// <param name="rigidbody"></param>
 	void AssignId(Rigidbody* rigidbody);
+
+	/// <summary>
+	/// Get positions of the BSP
+	/// </summary>
+	/// <returns>std::vector<std::pair<float, float>> positions</returns>
+	std::vector<std::pair<float, float>> GetPositions();
 
 private:
 

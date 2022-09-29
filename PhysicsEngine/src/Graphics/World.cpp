@@ -18,7 +18,8 @@ int World::Loop()
 
 		//Uncomment to check frame rate;
 		//std::cout << _deltaTime << std::endl;
-		_texts[11].setString(sf::String("DeltaTime : " + std::to_string(_deltaTime)));
+		_texts[11].setString(sf::String("FPS : " + std::to_string((CLOCKS_PER_SEC/_deltaTime)/1000)));
+		_texts[12].setString(sf::String("Entity Count : " + std::to_string(_entities.size())));
 	}
 
 	return EXIT_SUCCESS;
@@ -220,6 +221,20 @@ void World::Update()
 	{
 		_window.draw(text);
 	}
+	
+	/*std::vector<sf::RectangleShape> bspShapes;
+	for (size_t i = 0; i < _engine->GetBSP().GetPositions().size(); i++)
+	{
+		bspShapes.push_back(sf::RectangleShape(sf::Vector2f(_window.getSize().x / 2.f, _window.getSize().y / 2.f)));
+		bspShapes[i].setPosition(_engine->GetBSP().GetPositions()[i].first, _engine->GetBSP().GetPositions()[i].second);
+		bspShapes[i].setOutlineColor(sf::Color::Cyan);
+		bspShapes[i].setOutlineThickness(0.5f);
+	}
+	for (auto& shapes : bspShapes) 
+	{
+		_window.draw(shapes);
+	}*/
+
 	// Display all elements
 	_window.display();
 }
@@ -384,7 +399,15 @@ void World::InitialiseTexts()
 	frameRateText.setFont(_font);
 	frameRateText.setFillColor(sf::Color::White);
 	frameRateText.setCharacterSize(50);
-	frameRateText.setString(sf::String("DeltaTime : " + std::to_string(_deltaTime)));
+	frameRateText.setString(sf::String("FPS : " + std::to_string(CLOCKS_PER_SEC/_deltaTime)));
 	frameRateText.setPosition(sf::Vector2f(_window.getSize().x * 0.8f, _window.getSize().y * 0.0f));
 	_texts.emplace_back(frameRateText);
+
+	sf::Text entityCount;
+	entityCount.setFont(_font);
+	entityCount.setFillColor(sf::Color::White);
+	entityCount.setCharacterSize(50);
+	entityCount.setString(sf::String("Entity Count : " + std::to_string(_entities.size())));
+	entityCount.setPosition(sf::Vector2f(_window.getSize().x * 0.8f, _window.getSize().y * 0.1f));
+	_texts.emplace_back(entityCount);
 }

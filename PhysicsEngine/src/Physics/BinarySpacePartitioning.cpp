@@ -61,6 +61,11 @@ void BinarySpacePartitioning::AssignId(Rigidbody* rigidbody)
 	}
 }
 
+std::vector<std::pair<float, float>> BinarySpacePartitioning::GetPositions() 
+{
+	return _positions;
+}
+
 #pragma region BSP SpaceVersion
 //BinarySpacePartitioning::BinarySpacePartitioning() {}
 //

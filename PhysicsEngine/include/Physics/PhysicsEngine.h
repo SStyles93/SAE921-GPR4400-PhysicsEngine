@@ -80,16 +80,13 @@ public:
 	/// <returns>The gravity (Vector2)</returns>
 	Vector2 GetGravity();
 
+	/// <summary>
+	/// Gets the BSP of the engine
+	/// </summary>
+	/// <returns>BinarySpacePartitionning</returns>
+	BinarySpacePartitioning GetBSP();
+
 private:
-
-	std::vector<Rigidbody*> _rigidbodies;
-	std::vector<Vector2> _forces;
-
-	Vector2 _gravity = Vector2(0.0f, 0.0f);
-
-	std::vector<std::pair<Rigidbody*, Rigidbody*>> _collisions;
-
-	BinarySpacePartitioning _bsp;
 
 	/// <summary>
 	/// Adds a collision to the collision vector
@@ -109,5 +106,12 @@ private:
 	/// </summary>
 	void ClearCollisions();
 
+	std::vector<Rigidbody*> _rigidbodies;
+	std::vector<Vector2> _forces;
 
+	Vector2 _gravity = Vector2(0.0f, 0.0f);
+
+	std::vector<std::pair<Rigidbody*, Rigidbody*>> _collisions;
+
+	BinarySpacePartitioning _bsp;
 };

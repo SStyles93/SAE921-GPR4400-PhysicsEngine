@@ -31,8 +31,6 @@ void PhysicsEngine::PhysicsUpdate(float deltaTime)
 }
 void PhysicsEngine::CheckCollisions(Rigidbody* myRigidbody) 
 {
-	bool isColliding = false;
-
 	_bsp.AssignId(myRigidbody);
 	if (myRigidbody->GetId() == -1) return;
 
@@ -236,4 +234,9 @@ void PhysicsEngine::Clear()
 Vector2 PhysicsEngine::GetGravity() 
 {
 	return _gravity;
+}
+
+BinarySpacePartitioning PhysicsEngine::GetBSP() 
+{
+	return _bsp;
 }
