@@ -1,41 +1,28 @@
 #include "Physics/SphereCollider.h"
 
-SphereCollider::SphereCollider(Vector2 center, float radius) : _center(center), _radius(radius) {}
-SphereCollider::~SphereCollider(){}
+SphereCollider::SphereCollider(Vector2 center, float radius) : center_(center), radius_(radius) {}
 
 Vector2& SphereCollider::GetCenter()
 {
-	return _center;
+	return center_;
 }
 float& SphereCollider::GetRadius() 
 {
-	return _radius;
+	return radius_;
 }
 
 void SphereCollider::SetCenter(const Vector2& vector) 
 {
-	_center = vector;
+	center_ = vector;
 }
-bool SphereCollider::IsOverlappingSphere(SphereCollider* mySphere, SphereCollider* otherSphere, Vector2& mtv) 
+bool SphereCollider::IsOverlappingSphere(const SphereCollider* mySphere, const SphereCollider* otherSphere, Vector2& mtv) 
 {
-	Vector2 distance = otherSphere->_center - mySphere->_center;
+	const Vector2 distance = otherSphere->center_ - mySphere->center_;
 
-	float distanceMagnitude = distance.Magnitude();
-	float radiusSum = mySphere->_radius + otherSphere->_radius;
+	const float distanceMagnitude = distance.Magnitude();
+	const float radiusSum = mySphere->radius_ + otherSphere->radius_;
 
-	float mtvDifference = radiusSum - distanceMagnitude;
-	mtv = distance.Normalized() * mtvDifference;
-
-	return (distanceMagnitude <= radiusSum);
-}
-bool SphereCollider::IsOverlappingBox(SphereCollider* mySphere, BoxCollider* otherBox, Vector2& mtv)
-{
-	Vector2 distance = otherBox->GetCenter() - mySphere->GetCenter();
-
-	float distanceMagnitude = distance.Magnitude();
-	float radiusSum = mySphere->GetRadius() + otherBox->GetHalfExtent().Magnitude();
-
-	float mtvDifference = radiusSum - distanceMagnitude;
+	const float mtvDifference = radiusSum - distanceMagnitude;
 	mtv = distance.Normalized() * mtvDifference;
 
 	return (distanceMagnitude <= radiusSum);

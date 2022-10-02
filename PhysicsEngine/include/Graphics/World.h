@@ -26,7 +26,7 @@ public:
 	/// <summary>
 	/// The physics update of the engine
 	/// </summary>
-	void FixedUpdate();
+	void FixedUpdate() const;
 	/// <summary>
 	/// The visual update of the world
 	/// </summary>
@@ -37,39 +37,32 @@ public:
 	/// </summary>
 	/// <param name="position">The position (Vector2i)</param>
 	void AddCircleEntity(sf::Vector2i position);
-	/// <summary>
-	/// Adds an entity and the given position
-	/// </summary>
-	/// <param name="position">The position (Vector2i)</param>
-	void AddBoxEntity(sf::Vector2i position);
-	/// <summary>
-	/// Removes all entities
-	/// </summary>
+
 	void Clear();
 
 private:
 
 	//SFML 
 	//RenderWindow
-	sf::RenderWindow _window;
-	Vector2 _windowCenter;
+	sf::RenderWindow window_;
+	Vector2 windowCenter_{0,0};
 	//Font
 	sf::Font _font;
 	//Texts
-	std::vector<sf::Text> _texts;
+	std::vector<sf::Text> texts_;
 
 	//Entities
-	std::vector<std::unique_ptr<Entity>> _entities;
+	std::vector<std::unique_ptr<Entity>> entities_;
 
 	//Physics
-	std::unique_ptr<PhysicsEngine> _engine;
+	std::unique_ptr<PhysicsEngine> engine_;
 
 	//Time values
-	std::chrono::steady_clock::time_point previousTime;
-	float _deltaTime = 0;
+	std::chrono::steady_clock::time_point previousTime_;
+	float deltaTime_ = 0;
 
 	/// <summary>
-	/// Initialises the texts to display in _window
+	/// Initialises the texts to display in window_
 	/// </summary>
 	void InitialiseTexts();
 };

@@ -24,7 +24,7 @@ namespace SFMLUtilities
     
     sf::Vector2f metersToPixels(Vector2 meters)
     {
-        return sf::Vector2f(meters._x * pixelsMetersRatio, -1.0f * meters._y * pixelsMetersRatio);
+        return sf::Vector2f(meters.x * pixelsMetersRatio, -1.0f * meters.y * pixelsMetersRatio);
     }
     float metersToPixels(float meters) 
     {
@@ -38,7 +38,7 @@ namespace SFMLUtilities
     }
     sf::Vector2f WorldToSfml(const Vector2 vector, sf::RenderWindow& window)
     {
-        sf::Vector2f newPos = sf::Vector2f(vector._x * pixelsMetersRatio, -vector._y * pixelsMetersRatio);
+        sf::Vector2f newPos = sf::Vector2f(vector.x * pixelsMetersRatio, -vector.y * pixelsMetersRatio);
         return newPos;
     }
 }

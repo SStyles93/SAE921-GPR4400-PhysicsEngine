@@ -1,48 +1,48 @@
 #include "Graphics/Entity.h"
+#include "Graphics/SfmlUtilities.h"
 
 
-Entity::Entity(std::unique_ptr<sf::Shape> shape) : _shape(std::move(shape)){}
-Entity::Entity(std::unique_ptr<sf::Shape> shape, std::unique_ptr<Rigidbody> rigidbody) : _shape(std::move(shape)), _rigidbody(std::move(rigidbody)){}
-Entity::~Entity() = default;
+Entity::Entity(std::unique_ptr<sf::Shape> shape) : shape_(std::move(shape)){}
+Entity::Entity(std::unique_ptr<sf::Shape> shape, std::unique_ptr<Rigidbody> rigidbody) : shape_(std::move(shape)), rigidbody_(std::move(rigidbody)){}
 
 Rigidbody* Entity::GetRigidbody() 
 {
-	return _rigidbody.get();
+	return rigidbody_.get();
 }
 
 void Entity::Update(sf::RenderWindow& window) 
 {
-	setPosition(SFMLUtilities::WorldToSfml(_rigidbody->GetPosition(), window));
+	setPosition(SFMLUtilities::WorldToSfml(rigidbody_->GetPosition(), window));
 }
 void Entity::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	if (_rigidbody != nullptr) 
+	if (rigidbody_ != nullptr) 
 	{
-		if (_rigidbody->GetCollider()->IsColliding()) 
+		if (rigidbody_->GetCollider()->IsColliding()) 
 		{
 			//Color
-			sf::Color greenColor = sf::Color(0, 255, 0, 255);
-			_shape->setFillColor(greenColor);
+			sf::Color const greenColor = sf::Color(0, 255, 0, 255);
+			shape_->setFillColor(greenColor);
 			
 		}
 		else
 		{
-			sf::Color color = sf::Color(255, 255, 255, 255);
-			_shape->setFillColor(color);
+			sf::Color const color = sf::Color(255, 255, 255, 255);
+			shape_->setFillColor(color);
 		}
 
-		if (_rigidbody->GetCollider()->IsOverlapping()) 
+		if (rigidbody_->GetCollider()->IsOverlapping()) 
 		{
-			sf::Color redColor = sf::Color(255, 0, 0, 255);
-			_shape->setOutlineThickness(2.f);
-			_shape->setOutlineColor(redColor);
+			sf::Color const redColor = sf::Color(255, 0, 0, 255);
+			shape_->setOutlineThickness(2.f);
+			shape_->setOutlineColor(redColor);
 		}
 		else
 		{
-			_shape->setOutlineThickness(0.f);
+			shape_->setOutlineThickness(0.f);
 		}
 	}
 
 	states.transform *= getTransform();
-	target.draw(*_shape, states);
+	target.draw(*shape_, states);
 }

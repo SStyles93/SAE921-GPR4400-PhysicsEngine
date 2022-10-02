@@ -1,53 +1,50 @@
 #include "Physics/Rigidbody.h"
 
-Rigidbody::Rigidbody(){}
-Rigidbody::~Rigidbody(){}
-
 #pragma region Getters
 
-Vector2 Rigidbody::GetAcceleration() 
+Vector2 Rigidbody::GetAcceleration() const
 {
-	return _acceleration;
+	return acceleration_;
 }
-Vector2 Rigidbody::GetForce() 
+Vector2 Rigidbody::GetForce() const
 {
-	return _force;
+	return force_;
 }
-Vector2 Rigidbody::GetPosition() 
+Vector2 Rigidbody::GetPosition() const
 {
-	return _position;
+	return position_;
 }
-Vector2 Rigidbody::GetRotation()
+Vector2 Rigidbody::GetRotation() const
 {
-	return _rotation;
+	return rotation_;
 }
-Vector2 Rigidbody::GetVelocity() 
+Vector2 Rigidbody::GetVelocity() const
 {
-	return _velocity;
+	return velocity_;
 }
-Collider* Rigidbody::GetCollider()
+Collider* Rigidbody::GetCollider() const
 {
 	return _collider.get();
 }
-float Rigidbody::GetBounciness() 
+float Rigidbody::GetBounciness() const
 {
-	return _bounciness;
+	return bounciness_;
 }
-float Rigidbody::GetMass() 
+float Rigidbody::GetMass() const
 {
-	return _mass;
+	return mass_;
 }
-float Rigidbody::GetGravityScale() 
+float Rigidbody::GetGravityScale() const
 {
-	return _gravityScale;
+	return gravityScale_;
 }
-bool Rigidbody::IsStatic() 
+bool Rigidbody::IsStatic() const
 {
-	return _isStatic;
+	return isStatic_;
 }
-int Rigidbody::GetId()
+int Rigidbody::GetId() const
 {
-	return _id;
+	return id_;
 }
 
 #pragma endregion
@@ -55,19 +52,19 @@ int Rigidbody::GetId()
 
 void Rigidbody::AddForce(const Vector2& force) 
 {
-	_force += force;
+	force_ += force;
 }
 void Rigidbody::IsKinematic(bool value)
 {
-	_isStatic = !value;
+	isStatic_ = !value;
 }
 void Rigidbody::SetAcceleration(const Vector2& acceleration) 
 {
-	_acceleration = acceleration;
+	acceleration_ = acceleration;
 }
 void Rigidbody::SetBounciness(const float& bounciness)
 {
-	_bounciness = bounciness;
+	bounciness_ = bounciness;
 }
 void Rigidbody::SetCollider(std::unique_ptr<Collider> collider)
 {
@@ -75,31 +72,31 @@ void Rigidbody::SetCollider(std::unique_ptr<Collider> collider)
 }
 void Rigidbody::SetForce(const Vector2& force) 
 {
-	_force = force;
+	force_ = force;
 }
 void Rigidbody::SetGravityScale(const float& gravtityScale) 
 {
-	_gravityScale = gravtityScale;
+	gravityScale_ = gravtityScale;
 }
 void Rigidbody::SetId(int id)
 {
-	_id = id;
+	id_ = id;
 }
 void Rigidbody::SetMass(const float& mass) 
 {
-	_mass = mass;
+	mass_ = mass;
 }
 void Rigidbody::SetPosition(const Vector2& position) 
 {
-	_position = position;
+	position_ = position;
 }
 void Rigidbody::SetRotation(const Vector2& rotation)
 {
-	_rotation = rotation;
+	rotation_ = rotation;
 }
 void Rigidbody::SetVelocity(const Vector2& velocity)
 {
-	_velocity = velocity;
+	velocity_ = velocity;
 }
 
 #pragma endregion

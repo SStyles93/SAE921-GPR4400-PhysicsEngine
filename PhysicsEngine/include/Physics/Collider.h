@@ -4,8 +4,7 @@
 class Collider
 {
 public:
-	Collider();
-	~Collider();
+	virtual ~Collider() = default;
 
 	virtual void SetCenter(const Vector2&) = 0;
 
@@ -13,18 +12,17 @@ public:
 	/// Gets the state of collision
 	/// </summary>
 	/// <returns>The state of collision (bool)</returns>
-	bool IsColliding();
+	[[nodiscard]] bool IsColliding() const;
 	/// <summary>
 	/// Sets the state of collision
 	/// </summary>
 	/// <param name="value">The state to set (bool)</param>
-	void IsColliding(const bool value);
+	void IsColliding(bool value);
 	/// <summary>
 	/// Base method for the Overlap with other objects
 	/// </summary>
-	/// <param name="myCollider">The collider to check</param>
 	/// <returns>True if there is an overlap</returns>
-	bool IsOverlapping();
+	[[nodiscard]] auto IsOverlapping() const -> bool;
 	/// <summary>
 	/// Sets the state of overlap.
 	/// </summary>
@@ -33,6 +31,6 @@ public:
 
 private:
 
-	bool _isColliding = false;
-	bool _isOverlapping = false;
+	bool isColliding_ = false;
+	bool isOverlapping_ = false;
 };

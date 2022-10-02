@@ -1,88 +1,76 @@
 #include "Maths/Vector2.h"
 
-Vector2::Vector2(const float x, const float y) : _x(x), _y(y) 
-{
-	_line[0] = sf::Vector2(0.0f, 0.0f);
-	_line[1] = sf::Vector2(_x, _y);
-}
-Vector2::Vector2() 
-{
-	_x = 0.0f;
-	_y = 0.0f;
-}
-Vector2::~Vector2() {}
+Vector2::Vector2() = default;
+Vector2::Vector2(const float x, const float y) : x(x), y(y) {}
 
-float Vector2::Magnitude() 
+float Vector2::Magnitude() const
 {
-	return std::sqrtf((_x * _x) + (_y * _y));
+	return std::sqrtf((x * x) + (y * y));
 };
-float Vector2::SqrMagnitude() 
+float Vector2::SqrMagnitude() const
 {
-	return (_x * _x) + (_y * _y);
+	return (x * x) + (y * y);
 };
-float Vector2::Dot(const Vector2& v1)
+float Vector2::Dot(const Vector2& v1) const
 {
-	return (_x * v1._x)  + (_y * v1._y);
+	return (x * v1.x)  + (y * v1.y);
 }
-Vector2 Vector2::Normalized() 
+Vector2 Vector2::Normalized() const
 {
 	if (Magnitude() <= 0.0f) 
 	{
-		return Vector2(0.0f, 0.0f);
+		return Vector2{ 0.0f, 0.0f };
 	}
-	return Vector2(_x / Magnitude(), _y / Magnitude());
+	return Vector2{ x / Magnitude(), y / Magnitude() };
 }
 Vector2 Vector2::RightOrtho() 
 {
-	return Vector2(_y, -_x);
+	return Vector2{ y, -x };
 }
 Vector2 Vector2::LeftOrtho()
 {
-	return Vector2(-_y, _x);
+	return Vector2{ -y, x };
 }
 
-void Vector2::SetOrigin(const Vector2& origin) 
+void Vector2::SetOrigin(const Vector2& origin){}
+
+std::string Vector2::ToString() const
 {
-	_line[0] = sf::Vector2(origin._x, origin._y);
+	return std::string(std::to_string(x) + " , " + std::to_string(y));
 }
 
-std::string Vector2::ToString() 
+Vector2 Vector2::operator+(const Vector2& v1) const
 {
-	return std::string(std::to_string(_x) + " , " + std::to_string(_y));
+	return Vector2{ x + v1.x, y + v1.y };
 }
-
-Vector2 Vector2::operator+(const Vector2& v1)
+Vector2 Vector2::operator-(const Vector2& v1) const
 {
-	return Vector2(_x + v1._x, _y + v1._y);
+	return Vector2{x - v1.x, y - v1.y};
 }
-Vector2 Vector2::operator-(const Vector2& v1) 
+Vector2 Vector2::operator+=(const Vector2& v1)
 {
-	return Vector2(_x - v1._x, _y - v1._y);
-}
-Vector2 Vector2::operator+=(const Vector2& v1) 
-{
-	_x = _x + v1._x;
-	_y = _y + v1._y;
+	x = x + v1.x;
+	y = y + v1.y;
 
 	return *this;
 }
 Vector2 Vector2::operator-=(const Vector2& v1)
 {
-	_x = _x - v1._x;
-	_y = _y - v1._y;
+	x = x - v1.x;
+	y = y - v1.y;
 
 	return *this;
 }
-Vector2 Vector2::operator*(const float& f)
+Vector2 Vector2::operator*(const float& f) const
 {
-	return Vector2(_x * f, _y * f);
+	return Vector2{ x * f, y * f };
 }
-Vector2 Vector2::operator/(const float& f)
+Vector2 Vector2::operator/(const float& f) const
 {
-	return Vector2(_x / f, _y / f);
+	return Vector2{ x / f, y / f };
 }
-std::ostream& operator<<(std::ostream& os, const Vector2& vec) 
+std::ostream& operator<<(std::ostream& os, const Vector2& vec)
 {
-	os << vec._x << '|' << vec._y << "\n";
+	os << vec.x << '|' << vec.y << "\n";
 	return os;
 }

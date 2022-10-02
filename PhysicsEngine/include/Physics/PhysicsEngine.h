@@ -2,9 +2,7 @@
 #include <vector>
 #include "Maths/Vector2.h"
 #include "Rigidbody.h"
-#include "Collider.h"
 #include "SphereCollider.h"
-#include "BoxCollider.h"
 
 class PhysicsEngine 
 {
@@ -18,22 +16,20 @@ public:
 	/// <summary>
 	/// Checks the collision between two colliders
 	/// </summary>
-	/// <param name="me">The collider to check</param>
-	/// <param name="other">The other collider with which the first one is checked</param>
 	void CheckCollisions(Rigidbody* myRigidbody);
 	/// <summary>
 	/// Solves the collisions between two rigidbodies
 	/// </summary>
 	/// <param name="myBody">The first rigidbody</param>
 	/// <param name="otherBody">The second rigidbody</param>
-	void SolveCollision(Rigidbody* myBody, Rigidbody* otherBody);
+	static void SolveCollision(Rigidbody* myBody, Rigidbody* otherBody);
 	/// <summary>
 	/// Solves the minimal translation vector (mtv) to place correctly two objects that are overlapping too much
 	/// </summary>
 	/// <param name="myBody">The first rigidbody</param>
 	/// <param name="otherBody">The second rigidbody</param>
 	/// <param name="mtv">The minimal translation vector (Vector2)</param>
-	void SolveMTV(Rigidbody* myBody, Rigidbody* otherBody, Vector2& mtv);
+	static void SolveMTV(Rigidbody* myBody, Rigidbody* otherBody, Vector2& mtv);
 
 	/// <summary>
 	/// Register the Rigidbody in the PhysicsEngine
@@ -71,7 +67,7 @@ public:
 	/// Gets the Gravity
 	/// </summary>
 	/// <returns>The gravity (Vector2)</returns>
-	Vector2 GetGravity();
+	[[nodiscard]] Vector2 GetGravity() const;
 
 private:
 
@@ -87,17 +83,17 @@ private:
 	/// <param name="myBody">The first rigidbody</param>
 	/// <param name="otherBody">The second rigidbody</param>
 	/// <returns>True if already done</returns>
-	bool CheckCollisionDone(Rigidbody* myBody, Rigidbody* otherBody);
+	bool CheckCollisionDone(Rigidbody* myBody, Rigidbody* otherBody) const;
 	/// <summary>
 	/// Clears all the collisions from the collision vector
 	/// </summary>
 	void ClearCollisions();
 
-	std::vector<Rigidbody*> _rigidbodies;
-	std::vector<Vector2> _forces;
+	std::vector<Rigidbody*> rigidbodies_{};
+	std::vector<Vector2> forces_{};
 
-	Vector2 _gravity = Vector2(0.0f, 0.0f);
+	Vector2 gravity_ = Vector2{ 0.0f, 0.0f };
 
-	std::vector<std::pair<Rigidbody*, Rigidbody*>> _collisions;
+	std::vector<std::pair<Rigidbody*, Rigidbody*>> collisions_{};
 
 };

@@ -1,21 +1,18 @@
 #include "Physics/Collider.h"
 
-Collider::Collider(){}
-Collider::~Collider(){}
-
-bool Collider::IsColliding() 
+bool Collider::IsColliding() const
 {
-	return _isColliding;
+	return isColliding_;
 }
-void Collider::IsColliding(const bool value) 
+void Collider::IsColliding(const bool value)
 {
-	_isColliding = value;
+	isColliding_ = value;
 }
-bool Collider::IsOverlapping() 
+bool Collider::IsOverlapping() const
 {
-	return _isOverlapping;
+	return isOverlapping_;
 }
 void Collider::IsOverlapping(bool value) 
 {
-	_isOverlapping = value;
+	isOverlapping_ = value;
 }
