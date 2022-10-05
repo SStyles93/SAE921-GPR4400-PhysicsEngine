@@ -5,7 +5,6 @@ class Collider
 {
 public:
 	virtual ~Collider() = default;
-
 	virtual void SetCenter(const Vector2&) = 0;
 
 	/// <summary>

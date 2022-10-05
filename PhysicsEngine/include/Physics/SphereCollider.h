@@ -1,8 +1,6 @@
 #pragma once
 #include "Collider.h"
 
-class BoxCollider;
-
 class SphereCollider : public Collider
 {
 public:

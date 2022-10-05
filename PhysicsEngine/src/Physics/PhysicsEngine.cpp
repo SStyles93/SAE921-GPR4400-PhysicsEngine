@@ -64,16 +64,16 @@ void PhysicsEngine::CheckCollisions(Rigidbody* myRigidbody)
 }
 void PhysicsEngine::SolveCollision(Rigidbody* myBody, Rigidbody* otherBody) 
 {
-	Vector2 v1 = myBody->GetVelocity();
-	Vector2 v2 = otherBody->GetVelocity();
+	const Vector2 v1 = myBody->GetVelocity();
+	const Vector2 v2 = otherBody->GetVelocity();
 
 	Vector2 n = Vector2(otherBody->GetPosition() - myBody->GetPosition()).Normalized();
 	Vector2 g = n.RightOrtho();
 
-	float V1n = n.Dot(v1);
-	float V1g = g.Dot(v1);
-	float V2n = n.Dot(v2);
-	float V2g = g.Dot(v2);
+	const float V1n = n.Dot(v1);
+	const float V1g = g.Dot(v1);
+	const float V2n = n.Dot(v2);
+	const float V2g = g.Dot(v2);
 
 	const Vector2 v1AfterImpact = Vector2(n.x * V2n + g.x * V1g, n.y * V2n + g.y * V1g);
 	const Vector2 v2AfterImpact = Vector2(n.x * V1n + g.x * V2g, n.y * V1n + g.y * V2g);
@@ -134,7 +134,7 @@ void PhysicsEngine::AddCollision(Rigidbody* myBody, Rigidbody* otherBody)
 }
 bool PhysicsEngine::CheckCollisionDone(Rigidbody* myBody, Rigidbody* otherBody) const
 {
-	for (const auto pair : collisions_)
+	for (const auto& pair : collisions_)
 	{
 		if ((pair.first == myBody && pair.second == otherBody) || (pair.first == otherBody && pair.second == myBody)) 
 		{

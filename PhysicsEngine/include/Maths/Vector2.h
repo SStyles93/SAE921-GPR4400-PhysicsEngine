@@ -44,7 +44,7 @@ public:
 	/// <summary>
 	/// Returns the left tengent of a vector
 	/// </summary>
-	/// <returns>The left tengetn (Vector2)</returns>
+	/// <returns>The left tengent (Vector2)</returns>
 	auto LeftOrtho() -> Vector2;
 	/// <summary>
 	/// Outputs the X and Y values
