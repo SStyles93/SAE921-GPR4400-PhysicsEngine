@@ -131,7 +131,7 @@ public:
 
 private:
 
-	std::unique_ptr<Collider> _collider;
+	std::unique_ptr<Collider> collider_;
 
 	Vector2 acceleration_ = Vector2{ 0.0f, 0.0f };
 	Vector2 force_ = Vector2{ 0.0f, 0.0f };

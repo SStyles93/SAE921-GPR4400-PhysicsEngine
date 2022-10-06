@@ -37,27 +37,32 @@ void World::Init()
 	//Create the physics engine
 	engine_ = std::make_unique<PhysicsEngine>();
 
-	//BinarySpacePartitioning bsp =
-	//	/*BinarySpacePartitioning(
-	//		SFMLUtilities::pixelsToMeters(window_.getSize()), 4);*/
-	//	BinarySpacePartitioning(Vector2(1620, 1080), 4);
-	//engine_->SetBSP(bsp);
 
-	////Check BSP by uncommenting this area
-	//for (size_t i = 0; i < 100; i++)
-	//{
-	//	AddCircleEntity(sf::Vector2i(window_.getSize().x * 0.25f, window_.getSize().y * 0.25f));
-	//}
-	//for (size_t i = 0; i < 100; i++)
-	//{
-	//	AddCircleEntity(sf::Vector2i(window_.getSize().x * 0.25f, window_.getSize().y * 0.75f));
-	//}for (size_t i = 0; i < 100; i++)
-	//{
-	//	AddCircleEntity(sf::Vector2i(window_.getSize().x * 0.75f, window_.getSize().y * 0.25f));
-	//}for (size_t i = 0; i < 100; i++)
-	//{
-	//	AddCircleEntity(sf::Vector2i(window_.getSize().x * 0.75f, window_.getSize().y * 0.755f));
-	//}
+	auto positionInMeters = Vector2(SFMLUtilities::SfmlToWorld(sf::Vector2i(window_.getSize().x*0.5f, window_.getSize().y*0.5f), window_));
+
+	//Creates a circle shape
+	
+	sf::CircleShape circle = sf::CircleShape(60.0f);
+	circle.setOrigin(circle.getRadius(), circle.getRadius());
+
+	//Create an entity
+	std::unique_ptr<Entity> entity1 = std::make_unique<Entity>(std::make_unique<sf::CircleShape>(circle), std::make_unique<Rigidbody>());
+
+	entity1->GetRigidbody()->SetPosition(positionInMeters);
+	entity1->GetRigidbody()->SetMass(1.0f);
+	entity1->GetRigidbody()->SetGravityScale(1.0f);
+	entity1->GetRigidbody()->SetCollider(std::make_unique<SphereCollider>(positionInMeters, 60.0f / SFMLUtilities::pixelsMetersRatio));
+
+	//Sets the bounciness of the entity
+	entity1->GetRigidbody()->SetBounciness(0.0f);
+
+	////Sets the Rigibody to static
+	//entity1->GetRigidbody()->IsKinematic(false);
+
+	//Register entities to the physics engine
+	engine_->RegisterRigidbody(entity1->GetRigidbody());
+	//Register entity to the world
+	entities_.emplace_back(std::move(entity1));
 
 	InitialiseTexts();
 
@@ -232,7 +237,7 @@ void World::Update()
 
 void World::AddCircleEntity(sf::Vector2i position)
 {
-	Vector2 positionInMeters = Vector2(SFMLUtilities::SfmlToWorld(position, window_));
+	auto positionInMeters = Vector2(SFMLUtilities::SfmlToWorld(position, window_));
 
 	//Creates a circle shape
 	sf::CircleShape circle = sf::CircleShape(20.0f);

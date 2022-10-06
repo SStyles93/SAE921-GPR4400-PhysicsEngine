@@ -24,7 +24,7 @@ Vector2 Rigidbody::GetVelocity() const
 }
 Collider* Rigidbody::GetCollider() const
 {
-	return _collider.get();
+	return collider_.get();
 }
 float Rigidbody::GetBounciness() const
 {
@@ -68,7 +68,7 @@ void Rigidbody::SetBounciness(const float& bounciness)
 }
 void Rigidbody::SetCollider(std::unique_ptr<Collider> collider)
 {
-	_collider = std::move(collider);
+	collider_ = std::move(collider);
 }
 void Rigidbody::SetForce(const Vector2& force) 
 {
