@@ -56,13 +56,32 @@ bool BoxCollider::IsOverlappingBox(BoxCollider* myBox, BoxCollider* otherBox, Ve
 }
 bool BoxCollider::IsOverlappingSphere(BoxCollider* myBox, SphereCollider* otherSphere, Vector2& mtv) 
 {
-	Vector2 distance = otherSphere->GetCenter() - myBox->_center;
+	const float min1X = myBox->_center._x - myBox->_halfExtent._x;
+	const float max1X = myBox->_center._x + myBox->_halfExtent._x;
+	const float min1Y = myBox->_center._y - myBox->_halfExtent._y;
+	const float max1Y = myBox->_center._y + myBox->_halfExtent._y;
 
+	const float min2X = otherSphere->GetCenter()._x - otherSphere->GetRadius();
+	const float max2X = otherSphere->GetCenter()._x + otherSphere->GetRadius();
+	const float min2Y = otherSphere->GetCenter()._y - otherSphere->GetRadius();
+	const float max2Y = otherSphere->GetCenter()._y + otherSphere->GetRadius();
+
+	if ((max1X < min2X) ||
+		(min1X > max2X))
+	{
+		return false;
+	}
+	if ((max1Y < min2Y) ||
+		(min1Y > max2Y))
+	{
+		return false;
+	}
+	Vector2 distance = Vector2(otherSphere->GetCenter() - myBox->_center);
 	float distanceMagnitude = distance.Magnitude();
-	float radiusSum = myBox->_halfExtent.Magnitude() + otherSphere->GetRadius();
+	float lenghtSum = myBox->_halfExtent.Magnitude() + otherSphere->GetRadius();
 
-	float mtvDifference = radiusSum - distanceMagnitude;
+	float mtvDifference = lenghtSum - distanceMagnitude;
 	mtv = distance.Normalized() * mtvDifference;
 
-	return (distanceMagnitude <= radiusSum);
+	return distanceMagnitude <= lenghtSum;
 }
